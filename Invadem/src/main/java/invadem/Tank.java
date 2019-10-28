@@ -41,13 +41,13 @@ public class Tank implements Drawable, Collidable {
     }
 
     public void moveLeft() {
-        if (this.posX > 0) {
+        if (this.posX > 180) {
             this.posX -= 1;
         }
     }
 
     public void moveRight() {
-        if (this.posX < 640) {
+        if (this.posX < 460) {
             this.posX += 1;
         }
     }

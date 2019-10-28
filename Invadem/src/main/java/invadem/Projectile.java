@@ -53,6 +53,11 @@ public class Projectile implements Drawable, Collidable {
 
     private void tick() {
         this.posY -= 1;
+
+        // Destroy if projectile leaves map
+        if (this.posY < 0 || this.posY > 480) {
+            this.destroyed = true;
+        }
     }
 
     public void draw(App app) {
