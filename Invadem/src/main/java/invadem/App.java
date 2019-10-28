@@ -44,7 +44,15 @@ public class App extends PApplet {
         this.tank = new Tank(this.imgTank, this.imgProjectile);
 
         this.invaders = new ArrayList<Invader>();
-        this.invaders.add(new Invader(this.imgInvader, this.imgProjectile, 200, 50));
+
+        for (int i=0; i<40; i++) {
+            this.invaders.add(new Invader(
+                this.imgInvader, 
+                this.imgProjectile, 
+                320 + 8 - 16 + (i%10 - 5) * 32, 
+                50 + (i/10) * 32
+            ));
+        }
 
 
         // Create barriers

@@ -69,7 +69,7 @@ public class Invader implements Drawable, Collidable {
 
     public void tick() {
         this.stateTick--;
-
+        
         // Move invader in a direction depending on its current state
         // States are cycled through on at an interval of 30 ticks horizontal and 8 ticks vertical
         switch (this.stateNum) {
@@ -83,7 +83,7 @@ public class Invader implements Drawable, Collidable {
                 break;
             case 1:
                 // Move down for 8 ticks
-                this.posY++;
+                // this.posY++;
                 if (this.stateTick == 0) {
                     this.stateNum = 2;
                     this.stateTick = 30;
@@ -99,7 +99,7 @@ public class Invader implements Drawable, Collidable {
                 break;
             case 3:
                 // Move down for 8 ticks
-                this.posY++;
+                // this.posY++;
                 if (this.stateTick == 0) {
                     this.stateNum = 0;
                     this.stateTick = 30;
