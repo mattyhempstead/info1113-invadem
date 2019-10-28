@@ -7,6 +7,7 @@ public class Tank implements Drawable, Collidable {
     private int posY;
     private int width;
     private int height;
+    private int health;
 
     private PImage imgTank;
     private PImage imgProjectile;
@@ -14,6 +15,8 @@ public class Tank implements Drawable, Collidable {
     public Tank(PImage imgTank, PImage imgProjectile) {
         this.imgTank = imgTank;
         this.imgProjectile = imgProjectile;
+
+        this.health = 3;
 
         this.width = 22;
         this.height = 16;
@@ -50,7 +53,13 @@ public class Tank implements Drawable, Collidable {
     }
 
     public void hit() {
-        
+        if (this.health > 0) {
+            this.health--;
+        }
+    }
+
+    public boolean isDestroyed() {
+        return this.health == 3;
     }
 
     /**

@@ -8,6 +8,8 @@ public interface Collidable {
     public int getHeight();
     public int getPosX();
     public int getPosY();
+    public void hit();
+    public boolean isDestroyed();
     public static boolean isColliding(Collidable a, Collidable b) {
         if (a.getPosX() < b.getPosX() + b.getWidth() &&
             a.getPosX() + a.getWidth() > b.getPosX() &&

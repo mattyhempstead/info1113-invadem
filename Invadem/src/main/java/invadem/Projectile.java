@@ -8,7 +8,7 @@ public class Projectile implements Drawable, Collidable {
     private int width;
     private int height;
     private boolean friendly;
-    private boolean hit;
+    private boolean destroyed;
 
     private PImage imgProjectile;
 
@@ -20,7 +20,7 @@ public class Projectile implements Drawable, Collidable {
         this.width = 1;
         this.height = 3;
         this.friendly = friendly;
-        this.hit = false;
+        this.destroyed = false;
     }
 
     public int getPosX() {
@@ -44,11 +44,11 @@ public class Projectile implements Drawable, Collidable {
     }
 
     public boolean isDestroyed() {
-        return this.hit;
+        return this.destroyed;
     }
 
     public void hit() {
-        this.hit = true;
+        this.destroyed = true;
     }
 
     private void tick() {
