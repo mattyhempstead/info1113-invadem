@@ -5,27 +5,39 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class App extends PApplet {
+    private int gameState;          // The current game state (0=playing game, 1=next level, 2=game over)
+    private int gameStateTickCount; // The amount of ticks user has been in the current game state
+
+    private PImage imgNextLevel;
+    private PImage imgGameOver;
+
     private Tank tank;
+    private boolean movingLeft;
+    private boolean movingRight;
+
     private ArrayList<Projectile> projectiles;
     private ArrayList<Barrier> barriers;
     private ArrayList<Invader> invaders;
 
-    private boolean movingLeft;
-    private boolean movingRight;
-
     public void setup() {
         frameRate(60);
 
-        // All resources are loaded and stored in static variables in their respective classes
-        // This prevents needing to reload resources each time they are needed
+        this.gameState = 0;
+        this.gameStateTickCount = 0;
+
+        this.imgNextLevel = loadImage("nextlevel.png");
+        this.imgGameOver = loadImage("gameover.png");
+
+        // Some resources are loaded and stored in static variables in their respective classes
+        // This prevents the need to reload resources each time they are needed by a new object
         Tank.loadResources( loadImage("tank1.png") );
         Invader.loadResources( new PImage[] { loadImage("invader1.png"), loadImage("invader2.png") } );
         Projectile.loadResources( loadImage("projectile.png") );
         Barrier.loadResources(
-            new PImage[] { loadImage("barrier_left1.png"), loadImage("barrier_left2.png"), loadImage("barrier_left3.png") },
+            new PImage[] { loadImage("barrier_left1.png"),  loadImage("barrier_left2.png"),  loadImage("barrier_left3.png")  },
             new PImage[] { loadImage("barrier_right1.png"), loadImage("barrier_right2.png"), loadImage("barrier_right3.png") },
             new PImage[] { loadImage("barrier_solid1.png"), loadImage("barrier_solid2.png"), loadImage("barrier_solid3.png") },
-            new PImage[] { loadImage("barrier_top1.png"), loadImage("barrier_top2.png"), loadImage("barrier_top3.png") }
+            new PImage[] { loadImage("barrier_top1.png"),   loadImage("barrier_top2.png"),   loadImage("barrier_top3.png")   }
         );
 
 
@@ -35,6 +47,7 @@ public class App extends PApplet {
 
         this.projectiles = new ArrayList<Projectile>();
 
+        // Create invaders
         this.invaders = new ArrayList<Invader>();
         Invader.resetInvaders(this.invaders);
 
@@ -50,10 +63,37 @@ public class App extends PApplet {
     }
 
     public void draw() { 
-        //Main Game Loop
         background(0);
 
-        // System.out.println("test");
+        // Increment gameStateTickCount at each draw frame
+        this.gameStateTickCount++;
+
+        // Run the correct draw function for the game state
+        switch (this.gameState) {
+            case 0:
+                this.drawGame();
+                break;
+            case 1:
+                this.drawNextLevel();
+                break;
+            case 2:
+                this.drawGameOver();
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Changes the game state and resets the gameStateTickCount
+     * @param gameState The new game state
+     */
+    public void changeGameState(int gameState) {
+        this.gameState = gameState;
+        this.gameStateTickCount = 0;
+    }
+
+    public void drawGame() {
 
         if (this.movingLeft) this.tank.moveLeft();
         if (this.movingRight) this.tank.moveRight();
@@ -65,6 +105,20 @@ public class App extends PApplet {
         }
 
 
+        // Draw and tick tank
+        tank.draw(this);
+
+        // Draw and tick invaders
+        for (Invader invader : this.invaders) {
+            invader.draw(this);
+        }
+
+        // Draw barriers
+        for (Barrier barrier : this.barriers) {
+            barrier.draw(this);
+        }
+
+        // Draw and tick projectiles
         for (Projectile proj : this.projectiles) {
             proj.draw(this);
 
@@ -106,19 +160,38 @@ public class App extends PApplet {
         this.invaders.removeIf(invader -> invader.isDestroyed());
 
 
-        for (Barrier barrier : this.barriers) {
-            barrier.draw(this);
+        // Check for next level
+        if (invaders.size() == 0) {
+            this.changeGameState(1);
         }
 
-        for (Invader invader : this.invaders) {
-            invader.draw(this);
+        // Check for game over
+
+    }
+
+    /**
+     * A temporary next level screen displayed between levels
+     */
+    public void drawNextLevel() {
+        image(
+            imgNextLevel,
+            (640 - 122) / 2,
+            (480 - 16) / 2
+        );
+
+        // Display next level message for 3 seconds
+        if (this.gameStateTickCount == 60 * 3) {
+            this.changeGameState(0);
+
+            // Reset game for next level
+            Invader.resetInvaders(this.invaders);
+            Barrier.resetBarriers(this.barriers);
+            this.projectiles.clear();
+            this.tank = new Tank();
         }
+    }
 
-
-        
-
-        tank.draw(this);
-
+    public void drawGameOver() {
 
     }
 

@@ -89,10 +89,6 @@ public class Barrier implements Drawable, Collidable {
         return this.health == 0;
     }
 
-    private void tick() {
-
-    }
-
     public void draw(App app) {
         app.image(
             this.imgBarrierArray[3 - health], 
@@ -101,6 +97,5 @@ public class Barrier implements Drawable, Collidable {
             this.width, 
             this.height
         );
-        tick();
     }
 }
