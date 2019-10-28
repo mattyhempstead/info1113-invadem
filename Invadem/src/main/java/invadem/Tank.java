@@ -63,7 +63,7 @@ public class Tank implements Drawable, Collidable {
     }
 
     public boolean isDestroyed() {
-        return this.health == 3;
+        return this.health == 0;
     }
 
     /**

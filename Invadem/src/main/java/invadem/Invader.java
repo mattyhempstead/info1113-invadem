@@ -113,6 +113,10 @@ public class Invader implements Drawable, Collidable {
         return this.destroyed;
     }
 
+    public boolean hasReachedBarriers() {
+        return this.posY + this.height >= 400 - 12;
+    }
+
     /**
      * Returns a new invader projectile located at the center of the invader
      * @return The projectile instance

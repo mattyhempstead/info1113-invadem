@@ -111,6 +111,12 @@ public class App extends PApplet {
         // Draw and tick invaders
         for (Invader invader : this.invaders) {
             invader.draw(this);
+
+            // Check for game over state by invader reaching barriers
+            if (invader.hasReachedBarriers()) {
+                changeGameState(2);
+                return;
+            }
         }
 
         // Draw barriers
@@ -145,12 +151,17 @@ public class App extends PApplet {
                 }    
             }
 
+            // Check invader collision with tank
+            if (!proj.isFriendly() && Collidable.isColliding(proj, this.tank)) {
+                proj.hit();
+                this.tank.hit();
 
-            // if (Collidable.isColliding(proj, this.tank)) {
-            //     proj.hit();
-            //     this.tank.hit();
-            // }
-
+                // Check for game over from destruction by projectiles
+                if (this.tank.isDestroyed()) {
+                    this.changeGameState(2);
+                    return;
+                }
+            }
 
         }
 
@@ -164,8 +175,6 @@ public class App extends PApplet {
         if (invaders.size() == 0) {
             this.changeGameState(1);
         }
-
-        // Check for game over
 
     }
 
@@ -191,8 +200,16 @@ public class App extends PApplet {
         }
     }
 
+    /**
+     * A permanent game over state displayed when game is lost
+     * User must exit game to leave this state
+     */
     public void drawGameOver() {
-
+        image(
+            imgGameOver,
+            (640 - 112) / 2,
+            (480 - 16) / 2
+        );
     }
 
     public void keyPressed() {
