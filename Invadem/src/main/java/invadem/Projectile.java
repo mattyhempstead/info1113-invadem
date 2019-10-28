@@ -10,17 +10,19 @@ public class Projectile implements Drawable, Collidable {
     private boolean friendly;
     private boolean destroyed;
 
-    private PImage imgProjectile;
+    private static PImage imgProj;
 
-    public Projectile(PImage imgProjectile, int posX, int posY, boolean friendly) {
-        this.imgProjectile = imgProjectile;
-
+    public Projectile(int posX, int posY, boolean friendly) {
         this.posX = posX;
         this.posY = posY;
         this.width = 1;
         this.height = 3;
         this.friendly = friendly;
         this.destroyed = false;
+    }
+
+    public static void loadResources(PImage imgProj) {
+        Projectile.imgProj = imgProj;
     }
 
     public int getPosX() {
@@ -61,7 +63,7 @@ public class Projectile implements Drawable, Collidable {
     }
 
     public void draw(App app) {
-        app.image(this.imgProjectile, this.posX, this.posY, this.width, this.height);
+        app.image(imgProj, this.posX, this.posY, this.width, this.height);
         tick();
     }
 }

@@ -9,19 +9,19 @@ public class Tank implements Drawable, Collidable {
     private int height;
     private int health;
 
-    private PImage imgTank;
-    private PImage imgProjectile;
+    private static PImage imgTank;
     
-    public Tank(PImage imgTank, PImage imgProjectile) {
-        this.imgTank = imgTank;
-        this.imgProjectile = imgProjectile;
-
+    public Tank() {
         this.health = 3;
 
         this.width = 22;
         this.height = 16;
         this.posX = (640 / 2) - (this.width / 2);
         this.posY = 480 - this.height - 10;
+    }
+
+    public static void loadResources(PImage imgTank) {
+        Tank.imgTank = imgTank;
     }
 
     public int getPosX() {
@@ -68,7 +68,6 @@ public class Tank implements Drawable, Collidable {
      */
     public Projectile fire() {
         return new Projectile(
-            this.imgProjectile,
             this.posX + (this.width / 2),
             this.posY,
             true
@@ -78,10 +77,10 @@ public class Tank implements Drawable, Collidable {
     public void draw(App app) {
         // app.rect(this.posX, this.posY, this.width, this.height);
         app.image(
-            this.imgTank, 
-            this.posX, 
+            imgTank,
+            this.posX,
             this.posY,
-            this.width, 
+            this.width,
             this.height
         );
     }

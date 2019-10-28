@@ -13,26 +13,14 @@ public class App extends PApplet {
     private boolean movingLeft;
     private boolean movingRight;
 
-    // Load resources
-    private PImage imgTank;
-    private PImage imgProjectile;
-    private PImage[] imgInvader;
-
-
     public void setup() {
         frameRate(60);
-        // rectMode(CENTER);   // Draw all rectangles from the center
 
-
-
-
-        // Maybe pass in the image sprites to the constructors
-        // Maybe load the images here and then pass the image objects in the draw method
-        // Tank and Enemy should be given images for themselves, and also projectiles which they shoot
-        this.imgTank = loadImage("tank1.png");
-        this.imgProjectile = loadImage("projectile.png");
-        this.imgInvader = new PImage[] { loadImage("invader1.png"), loadImage("invader2.png") };
-
+        // All resources are loaded and stored in static variables in their respective classes
+        // This prevents needing to reload resources each time they are needed
+        Tank.loadResources( loadImage("tank1.png") );
+        Invader.loadResources( new PImage[] { loadImage("invader1.png"), loadImage("invader2.png") } );
+        Projectile.loadResources( loadImage("projectile.png") );
         Barrier.loadResources(
             new PImage[] { loadImage("barrier_left1.png"), loadImage("barrier_left2.png"), loadImage("barrier_left3.png") },
             new PImage[] { loadImage("barrier_right1.png"), loadImage("barrier_right2.png"), loadImage("barrier_right3.png") },
@@ -40,7 +28,8 @@ public class App extends PApplet {
             new PImage[] { loadImage("barrier_top1.png"), loadImage("barrier_top2.png"), loadImage("barrier_top3.png") }
         );
 
-        this.tank = new Tank(this.imgTank, this.imgProjectile);
+
+        this.tank = new Tank();
         this.movingLeft = false;
         this.movingRight = false;
 
@@ -51,8 +40,6 @@ public class App extends PApplet {
 
         for (int i=0; i<40; i++) {
             this.invaders.add(new Invader(
-                this.imgInvader, 
-                this.imgProjectile, 
                 320 - 9 + (i%10 - 5) * 28, 
                 50 + (i/10) * 32
             ));

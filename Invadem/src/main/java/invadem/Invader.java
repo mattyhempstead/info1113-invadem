@@ -19,12 +19,9 @@ public class Invader implements Drawable, Collidable {
     private static int shootCountdown = 0;
 
     // Store invader resources
-    private PImage[] imgInvader;
-    private PImage imgProjectile;
+    private static PImage[] imgInvader;
     
-    public Invader(PImage[] imgInvader, PImage imgProjectile, int posX, int posY) {
-        this.imgInvader = imgInvader;
-        this.imgProjectile = imgProjectile;
+    public Invader(int posX, int posY) {
 
         this.destroyed = false;
         
@@ -36,6 +33,10 @@ public class Invader implements Drawable, Collidable {
         this.height = 16;
         this.posX = posX;
         this.posY = posY;
+    }
+
+    public static void loadResources(PImage[] imgInvader) {
+        Invader.imgInvader = imgInvader;
     }
 
     /**
@@ -97,7 +98,6 @@ public class Invader implements Drawable, Collidable {
      */
     public Projectile fire() {
         return new Projectile(
-            this.imgProjectile,
             this.posX + (this.width / 2),
             this.posY + (this.height / 2),
             false
@@ -150,7 +150,7 @@ public class Invader implements Drawable, Collidable {
 
     public void draw(App app) {
         app.image(
-            this.imgInvader[this.stateNum % 2], 
+            imgInvader[this.stateNum % 2], 
             this.posX, 
             this.posY,
             this.width, 
