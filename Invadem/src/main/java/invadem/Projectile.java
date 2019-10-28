@@ -21,6 +21,10 @@ public class Projectile implements Drawable, Collidable {
         this.destroyed = false;
     }
 
+    /**
+     * Load sprites statically into the Projectile class
+     * @param imgProj   The main projectile sprite
+     */
     public static void loadResources(PImage imgProj) {
         Projectile.imgProj = imgProj;
     }

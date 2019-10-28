@@ -20,6 +20,10 @@ public class Tank implements Drawable, Collidable {
         this.posY = 480 - this.height - 10;
     }
 
+    /**
+     * Load sprites statically into the Tank class
+     * @param imgTank   The main tank sprite
+     */
     public static void loadResources(PImage imgTank) {
         Tank.imgTank = imgTank;
     }
