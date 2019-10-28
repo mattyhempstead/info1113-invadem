@@ -14,6 +14,7 @@ public class Projectile implements Drawable {
 
     public Projectile(PImage imgProjectile, int posX, int posY, boolean friendly) {
         this.imgProjectile = imgProjectile;
+
         this.posX = posX;
         this.posY = posY;
         this.width = 1;

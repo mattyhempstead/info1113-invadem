@@ -1,12 +1,14 @@
 package invadem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import processing.core.PApplet;
 import processing.core.PImage;
 
 public class App extends PApplet {
     private ArrayList<Projectile> projectiles;
-    
+    private ArrayList<Barrier> barriers;
+
     private Tank tank;
     
     private boolean movingLeft;
@@ -15,6 +17,11 @@ public class App extends PApplet {
     // Load resources
     private PImage imgTank;
     private PImage imgProjectile;
+    private PImage[] imgBarrierLeft;
+    private PImage[] imgBarrierRight;
+    private PImage[] imgBarrierSolid;
+    private PImage[] imgBarrierTop;
+
 
     public void setup() {
         frameRate(60);
@@ -23,13 +30,32 @@ public class App extends PApplet {
         // Maybe pass in the image sprites to the constructors
         // Maybe load the images here and then pass the image objects in the draw method
         // Tank and Enemy should be given images for themselves, and also projectiles which they shoot
-        this.imgTank = this.loadImage("tank1.png");
-        this.imgProjectile = this.loadImage("projectile.png");
+        this.imgTank = loadImage("tank1.png");
+        this.imgProjectile = loadImage("projectile.png");
+        
+        this.imgBarrierLeft = new PImage[] { loadImage("barrier_left1.png"), loadImage("barrier_left2.png"), loadImage("barrier_left3.png") };
+        this.imgBarrierRight = new PImage[] { loadImage("barrier_right1.png"), loadImage("barrier_right2.png"), loadImage("barrier_right3.png") };
+        this.imgBarrierSolid = new PImage[] { loadImage("barrier_solid1.png"), loadImage("barrier_solid2.png"), loadImage("barrier_solid3.png") };
+        this.imgBarrierTop = new PImage[] { loadImage("barrier_top1.png"), loadImage("barrier_top2.png"), loadImage("barrier_top3.png") };
 
 
         this.projectiles = new ArrayList<Projectile>();
-
         this.tank = new Tank(this.imgTank, this.imgProjectile);
+
+
+        // Create barriers
+        this.barriers = new ArrayList<Barrier>(
+            Arrays.asList(new Barrier[] {
+                new Barrier(this.imgBarrierSolid, 320 - 12, 240 + 4),
+                new Barrier(this.imgBarrierSolid, 320 - 12, 240 - 4),
+                new Barrier(this.imgBarrierLeft, 320 - 12, 240 - 12),
+                new Barrier(this.imgBarrierTop, 320 - 4, 240 - 12),
+                new Barrier(this.imgBarrierRight, 320 + 4, 240 - 12),
+                new Barrier(this.imgBarrierSolid, 320 + 4, 240 - 4),
+                new Barrier(this.imgBarrierSolid, 320 + 4, 240 + 4)
+            })
+        );
+
 
         this.movingLeft = false;
         this.movingRight = false;
@@ -53,6 +79,10 @@ public class App extends PApplet {
 
         for (Projectile proj : this.projectiles) {
             proj.draw(this);
+        }
+
+        for (Barrier barrier : this.barriers) {
+            barrier.draw(this);
         }
 
         tank.draw(this);

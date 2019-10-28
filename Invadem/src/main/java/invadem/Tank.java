@@ -12,13 +12,13 @@ public class Tank implements Drawable {
     private PImage imgProjectile;
     
     public Tank(PImage imgTank, PImage imgProjectile) {
+        this.imgTank = imgTank;
+        this.imgProjectile = imgProjectile;
+
         this.width = 22;
         this.height = 16;
         this.posX = (640 / 2) - (this.width / 2);
         this.posY = 480 - this.height - 10;
-
-        this.imgTank = imgTank;
-        this.imgProjectile = imgProjectile;
     }
 
     public void moveLeft() {
