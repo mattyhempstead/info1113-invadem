@@ -20,21 +20,19 @@ public class App extends PApplet {
         frameRate(60);
         // rectMode(CENTER);   // Draw all rectangles from the center
 
+        // Maybe pass in the image sprites to the constructors
+        // Maybe load the images here and then pass the image objects in the draw method
+        // Tank and Enemy should be given images for themselves, and also projectiles which they shoot
+        this.imgTank = this.loadImage("tank1.png");
+        this.imgProjectile = this.loadImage("projectile.png");
+
 
         this.projectiles = new ArrayList<Projectile>();
 
-        this.tank = new Tank();
+        this.tank = new Tank(this.imgTank, this.imgProjectile);
 
         this.movingLeft = false;
         this.movingRight = false;
-
-
-
-
-        // Maybe pass in the image sprites to the constructors
-        // Maybe load the images here and then pass the image objects in the draw method
-        this.imgTank = this.loadImage("tank1.png");
-        this.imgProjectile = this.loadImage("projectile.png");
 
     }
 
@@ -54,10 +52,10 @@ public class App extends PApplet {
 
 
         for (Projectile proj : this.projectiles) {
-            proj.draw(this, this.imgProjectile);
+            proj.draw(this);
         }
 
-        tank.draw(this, this.imgTank);
+        tank.draw(this);
 
 
     }

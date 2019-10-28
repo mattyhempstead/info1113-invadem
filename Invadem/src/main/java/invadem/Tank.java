@@ -1,6 +1,5 @@
 package invadem;
 
-// import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Tank implements Drawable {
@@ -9,13 +8,17 @@ public class Tank implements Drawable {
     private int width;
     private int height;
 
-    // private static PImage image = PApplet.loadImage("../resources/tank1.png");
+    private PImage imgTank;
+    private PImage imgProjectile;
     
-    public Tank() {
+    public Tank(PImage imgTank, PImage imgProjectile) {
         this.width = 22;
         this.height = 16;
         this.posX = (640 / 2) - (this.width / 2);
         this.posY = 480 - this.height - 10;
+
+        this.imgTank = imgTank;
+        this.imgProjectile = imgProjectile;
     }
 
     public void moveLeft() {
@@ -36,16 +39,17 @@ public class Tank implements Drawable {
      */
     public Projectile fire() {
         return new Projectile(
+            this.imgProjectile,
             this.posX + (this.width / 2),
             this.posY + (this.height / 2),
             true
         );
     }
 
-    public void draw(App app, PImage img) {
+    public void draw(App app) {
         // app.rect(this.posX, this.posY, this.width, this.height);
         app.image(
-            img, 
+            this.imgTank, 
             this.posX, 
             this.posY,
             this.width, 
