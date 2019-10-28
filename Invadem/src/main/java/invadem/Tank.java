@@ -41,7 +41,7 @@ public class Tank implements Drawable {
         return new Projectile(
             this.imgProjectile,
             this.posX + (this.width / 2),
-            this.posY + (this.height / 2),
+            this.posY,
             true
         );
     }
