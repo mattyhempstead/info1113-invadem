@@ -44,6 +44,23 @@ public class Invader implements Drawable, Collidable {
     }
 
     /**
+     * Resets all invaders to their initial 4x10 grid state
+     * @param invaders a reference to the ArrayList of invaders
+     */
+    public static void resetInvaders(ArrayList<Invader> invaders) {
+        // Clear the barriers list before adding new ones
+        invaders.clear();
+
+        // Add 4x10 grid of invaders
+        for (int i=0; i<40; i++) {
+            invaders.add(new Invader(
+                320 - 9 + (i%10 - 5) * 28, 
+                50 + (i/10) * 32
+            ));
+        }
+    }
+
+    /**
      * Decrements the shoot countdown for invaders and resets when it reaches 0
      * Will reset to a random integer between MIN_INVADER_SHOOT_TICKS and MAX_INVADER_SHOOT_TICKS
      */

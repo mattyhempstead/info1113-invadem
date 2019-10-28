@@ -35,15 +35,8 @@ public class App extends PApplet {
 
         this.projectiles = new ArrayList<Projectile>();
 
-        
         this.invaders = new ArrayList<Invader>();
-
-        for (int i=0; i<40; i++) {
-            this.invaders.add(new Invader(
-                320 - 9 + (i%10 - 5) * 28, 
-                50 + (i/10) * 32
-            ));
-        }
+        Invader.resetInvaders(this.invaders);
 
         // Create barriers
         this.barriers = new ArrayList<Barrier>();
