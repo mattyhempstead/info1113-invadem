@@ -6,10 +6,10 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class App extends PApplet {
+    private Tank tank;
     private ArrayList<Projectile> projectiles;
     private ArrayList<Barrier> barriers;
-
-    private Tank tank;
+    private ArrayList<Invader> invaders;
     
     private boolean movingLeft;
     private boolean movingRight;
@@ -21,6 +21,7 @@ public class App extends PApplet {
     private PImage[] imgBarrierRight;
     private PImage[] imgBarrierSolid;
     private PImage[] imgBarrierTop;
+    private PImage[] imgInvader;
 
 
     public void setup() {
@@ -32,15 +33,18 @@ public class App extends PApplet {
         // Tank and Enemy should be given images for themselves, and also projectiles which they shoot
         this.imgTank = loadImage("tank1.png");
         this.imgProjectile = loadImage("projectile.png");
-        
         this.imgBarrierLeft = new PImage[] { loadImage("barrier_left1.png"), loadImage("barrier_left2.png"), loadImage("barrier_left3.png") };
         this.imgBarrierRight = new PImage[] { loadImage("barrier_right1.png"), loadImage("barrier_right2.png"), loadImage("barrier_right3.png") };
         this.imgBarrierSolid = new PImage[] { loadImage("barrier_solid1.png"), loadImage("barrier_solid2.png"), loadImage("barrier_solid3.png") };
         this.imgBarrierTop = new PImage[] { loadImage("barrier_top1.png"), loadImage("barrier_top2.png"), loadImage("barrier_top3.png") };
+        this.imgInvader = new PImage[] { loadImage("invader1.png"), loadImage("invader2.png") };
 
 
         this.projectiles = new ArrayList<Projectile>();
         this.tank = new Tank(this.imgTank, this.imgProjectile);
+
+        this.invaders = new ArrayList<Invader>();
+        this.invaders.add(new Invader(this.imgInvader, this.imgProjectile, 50, 50));
 
 
         // Create barriers
@@ -98,12 +102,18 @@ public class App extends PApplet {
 
 
         }
+
+        // Remove any projectiles/barriers/invaders which are destroyed
         this.projectiles.removeIf(proj -> proj.isDestroyed());
         this.barriers.removeIf(barrier -> barrier.isDestroyed());
 
 
         for (Barrier barrier : this.barriers) {
             barrier.draw(this);
+        }
+
+        for (Invader invader : this.invaders) {
+            invader.draw(this);
         }
 
         tank.draw(this);
