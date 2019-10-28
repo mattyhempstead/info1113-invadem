@@ -44,7 +44,7 @@ public class App extends PApplet {
         this.tank = new Tank(this.imgTank, this.imgProjectile);
 
         this.invaders = new ArrayList<Invader>();
-        this.invaders.add(new Invader(this.imgInvader, this.imgProjectile, 50, 50));
+        this.invaders.add(new Invader(this.imgInvader, this.imgProjectile, 200, 50));
 
 
         // Create barriers
@@ -88,12 +88,23 @@ public class App extends PApplet {
             // Check if projectile has collided with any objects
             // We are allowing projectiles to collide with two objects at once,
             // assuming both objects are simultaneously colliding with the projectile.
+
+            // Check barrier collision
             for (Barrier barrier : this.barriers) {
                 if (Collidable.isColliding(proj, barrier)) {
                     proj.hit();
                     barrier.hit();
                 }
             }
+
+            // Check invader collision
+            for (Invader invader: this.invaders) {
+                if (Collidable.isColliding(proj, invader)) {
+                    proj.hit();
+                    invader.hit();
+                }
+            }
+
 
             // if (Collidable.isColliding(proj, this.tank)) {
             //     proj.hit();
@@ -106,6 +117,7 @@ public class App extends PApplet {
         // Remove any projectiles/barriers/invaders which are destroyed
         this.projectiles.removeIf(proj -> proj.isDestroyed());
         this.barriers.removeIf(barrier -> barrier.isDestroyed());
+        this.invaders.removeIf(invader -> invader.isDestroyed());
 
 
         for (Barrier barrier : this.barriers) {
