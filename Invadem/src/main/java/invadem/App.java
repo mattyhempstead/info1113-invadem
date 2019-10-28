@@ -10,7 +10,7 @@ public class App extends PApplet {
     private ArrayList<Projectile> projectiles;
     private ArrayList<Barrier> barriers;
     private ArrayList<Invader> invaders;
-    
+
     private boolean movingLeft;
     private boolean movingRight;
 
@@ -54,7 +54,6 @@ public class App extends PApplet {
             ));
         }
 
-
         // Create barriers
         this.barriers = new ArrayList<Barrier>(
             Arrays.asList(new Barrier[] {
@@ -87,6 +86,12 @@ public class App extends PApplet {
         if (this.movingLeft) this.tank.moveLeft();
         if (this.movingRight) this.tank.moveRight();
 
+        // If invader shoot countdown has finished, add a new invader projectile to the projectile list
+        Invader.tickShootCountdown();
+        if (Invader.shouldInvadersShoot()) {
+            System.out.println("Shooting");
+            this.projectiles.add(Invader.shootFromInvader(this.invaders));
+        }
 
 
         for (Projectile proj : this.projectiles) {
@@ -105,12 +110,14 @@ public class App extends PApplet {
                 }
             }
 
-            // Check invader collision
-            for (Invader invader: this.invaders) {
-                if (Collidable.isColliding(proj, invader)) {
-                    proj.hit();
-                    invader.hit();
-                }
+            // Check invader collision from friendly projectiles
+            if (proj.isFriendly()) {
+                for (Invader invader: this.invaders) {
+                    if (Collidable.isColliding(proj, invader)) {
+                        proj.hit();
+                        invader.hit();
+                    }
+                }    
             }
 
 
@@ -135,6 +142,9 @@ public class App extends PApplet {
         for (Invader invader : this.invaders) {
             invader.draw(this);
         }
+
+
+        
 
         tank.draw(this);
 

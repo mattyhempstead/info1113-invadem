@@ -52,7 +52,7 @@ public class Projectile implements Drawable, Collidable {
     }
 
     private void tick() {
-        this.posY -= 1;
+        this.posY += this.friendly ? -1 : 1;
 
         // Destroy if projectile leaves map
         if (this.posY < 0 || this.posY > 480) {

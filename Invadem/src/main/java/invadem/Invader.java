@@ -1,5 +1,7 @@
 package invadem;
 
+import java.util.ArrayList;
+import java.lang.Math;
 import processing.core.PImage;
 
 public class Invader implements Drawable, Collidable {
@@ -11,6 +13,12 @@ public class Invader implements Drawable, Collidable {
     private int stateNum;
     private int stateTick;
 
+    // Variables to keep track of when invader swarm should shoot
+    private final static int MIN_INVADER_SHOOT_TICKS = 60;
+    private final static int MAX_INVADER_SHOOT_TICKS = 60 * 5;
+    private static int shootCountdown = 0;
+
+    // Store invader resources
     private PImage[] imgInvader;
     private PImage imgProjectile;
     
@@ -28,6 +36,35 @@ public class Invader implements Drawable, Collidable {
         this.height = 16;
         this.posX = posX;
         this.posY = posY;
+    }
+
+    /**
+     * Decrements the shoot countdown for invaders and resets when it reaches 0
+     * Will reset to a random integer between MIN_INVADER_SHOOT_TICKS and MAX_INVADER_SHOOT_TICKS
+     */
+    public static void tickShootCountdown() {
+        if (shootCountdown == 0) {
+            shootCountdown = (int) (Math.random() * (MAX_INVADER_SHOOT_TICKS - MIN_INVADER_SHOOT_TICKS) + MIN_INVADER_SHOOT_TICKS);
+        } else {
+            shootCountdown--;
+        }
+    }
+
+    /**
+     * Checks if the shootCountdown has finished
+     * @return Whether or not invader swarm should shoot
+     */
+    public static boolean shouldInvadersShoot() {
+        return shootCountdown == 0;
+    }
+
+    /**
+     * Spawns a new invader projectile coming from a random invader in a list
+     * @return the projectile object
+     */
+    public static Projectile shootFromInvader(ArrayList<Invader> invaders) {
+        Invader randomInvader = invaders.get((int) (Math.random() * invaders.size()));
+        return randomInvader.fire();
     }
 
     public int getPosX() {
