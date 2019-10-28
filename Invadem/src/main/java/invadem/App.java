@@ -49,7 +49,7 @@ public class App extends PApplet {
             this.invaders.add(new Invader(
                 this.imgInvader, 
                 this.imgProjectile, 
-                320 + 8 - 16 + (i%10 - 5) * 32, 
+                320 - 9 + (i%10 - 5) * 28, 
                 50 + (i/10) * 32
             ));
         }

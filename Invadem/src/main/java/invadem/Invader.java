@@ -83,7 +83,7 @@ public class Invader implements Drawable, Collidable {
                 break;
             case 1:
                 // Move down for 8 ticks
-                // this.posY++;
+                this.posY++;
                 if (this.stateTick == 0) {
                     this.stateNum = 2;
                     this.stateTick = 30;
@@ -99,7 +99,7 @@ public class Invader implements Drawable, Collidable {
                 break;
             case 3:
                 // Move down for 8 ticks
-                // this.posY++;
+                this.posY++;
                 if (this.stateTick == 0) {
                     this.stateNum = 0;
                     this.stateTick = 30;
