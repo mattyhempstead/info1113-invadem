@@ -2,7 +2,7 @@ package invadem;
 
 import processing.core.PImage;
 
-public class Tank implements Drawable {
+public class Tank implements Drawable, Collidable {
     private int posX;
     private int posY;
     private int width;
@@ -21,6 +21,22 @@ public class Tank implements Drawable {
         this.posY = 480 - this.height - 10;
     }
 
+    public int getPosX() {
+        return this.posX;
+    }
+
+    public int getPosY() {
+        return this.posY;
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
+    
+    public int getHeight() {
+        return this.height;
+    }
+
     public void moveLeft() {
         if (this.posX > 0) {
             this.posX -= 1;
@@ -31,6 +47,10 @@ public class Tank implements Drawable {
         if (this.posX < 640) {
             this.posX += 1;
         }
+    }
+
+    public void hit() {
+        
     }
 
     /**

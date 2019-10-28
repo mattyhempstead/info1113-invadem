@@ -72,14 +72,35 @@ public class App extends PApplet {
 
         // System.out.println("test");
 
-        if (this.movingLeft) tank.moveLeft();
-        if (this.movingRight) tank.moveRight();
+        if (this.movingLeft) this.tank.moveLeft();
+        if (this.movingRight) this.tank.moveRight();
 
 
 
         for (Projectile proj : this.projectiles) {
             proj.draw(this);
+
+
+            // Check if projectile has collided with any objects
+            // We are allowing projectiles to collide with two objects at once,
+            // assuming both objects are simultaneously colliding with the projectile.
+            for (Barrier barrier : this.barriers) {
+                if (Collidable.isColliding(proj, barrier)) {
+                    proj.hit();
+                    barrier.hit();
+                }
+            }
+
+            // if (Collidable.isColliding(proj, this.tank)) {
+            //     proj.hit();
+            //     this.tank.hit();
+            // }
+
+
         }
+        this.projectiles.removeIf(proj -> proj.isDestroyed());
+        this.barriers.removeIf(barrier -> barrier.isDestroyed());
+
 
         for (Barrier barrier : this.barriers) {
             barrier.draw(this);
@@ -91,7 +112,6 @@ public class App extends PApplet {
     }
 
     public void keyPressed() {
-        System.out.println(keyCode);
         switch (keyCode) {
             case 37:
                 this.movingLeft = true;
