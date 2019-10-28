@@ -1,7 +1,6 @@
 package invadem;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -17,10 +16,6 @@ public class App extends PApplet {
     // Load resources
     private PImage imgTank;
     private PImage imgProjectile;
-    private PImage[] imgBarrierLeft;
-    private PImage[] imgBarrierRight;
-    private PImage[] imgBarrierSolid;
-    private PImage[] imgBarrierTop;
     private PImage[] imgInvader;
 
 
@@ -28,21 +23,30 @@ public class App extends PApplet {
         frameRate(60);
         // rectMode(CENTER);   // Draw all rectangles from the center
 
+
+
+
         // Maybe pass in the image sprites to the constructors
         // Maybe load the images here and then pass the image objects in the draw method
         // Tank and Enemy should be given images for themselves, and also projectiles which they shoot
         this.imgTank = loadImage("tank1.png");
         this.imgProjectile = loadImage("projectile.png");
-        this.imgBarrierLeft = new PImage[] { loadImage("barrier_left1.png"), loadImage("barrier_left2.png"), loadImage("barrier_left3.png") };
-        this.imgBarrierRight = new PImage[] { loadImage("barrier_right1.png"), loadImage("barrier_right2.png"), loadImage("barrier_right3.png") };
-        this.imgBarrierSolid = new PImage[] { loadImage("barrier_solid1.png"), loadImage("barrier_solid2.png"), loadImage("barrier_solid3.png") };
-        this.imgBarrierTop = new PImage[] { loadImage("barrier_top1.png"), loadImage("barrier_top2.png"), loadImage("barrier_top3.png") };
         this.imgInvader = new PImage[] { loadImage("invader1.png"), loadImage("invader2.png") };
 
+        Barrier.loadResources(
+            new PImage[] { loadImage("barrier_left1.png"), loadImage("barrier_left2.png"), loadImage("barrier_left3.png") },
+            new PImage[] { loadImage("barrier_right1.png"), loadImage("barrier_right2.png"), loadImage("barrier_right3.png") },
+            new PImage[] { loadImage("barrier_solid1.png"), loadImage("barrier_solid2.png"), loadImage("barrier_solid3.png") },
+            new PImage[] { loadImage("barrier_top1.png"), loadImage("barrier_top2.png"), loadImage("barrier_top3.png") }
+        );
+
+        this.tank = new Tank(this.imgTank, this.imgProjectile);
+        this.movingLeft = false;
+        this.movingRight = false;
 
         this.projectiles = new ArrayList<Projectile>();
-        this.tank = new Tank(this.imgTank, this.imgProjectile);
 
+        
         this.invaders = new ArrayList<Invader>();
 
         for (int i=0; i<40; i++) {
@@ -55,21 +59,9 @@ public class App extends PApplet {
         }
 
         // Create barriers
-        this.barriers = new ArrayList<Barrier>(
-            Arrays.asList(new Barrier[] {
-                new Barrier(this.imgBarrierSolid, 320 - 12, 240 + 4),
-                new Barrier(this.imgBarrierSolid, 320 - 12, 240 - 4),
-                new Barrier(this.imgBarrierLeft, 320 - 12, 240 - 12),
-                new Barrier(this.imgBarrierTop, 320 - 4, 240 - 12),
-                new Barrier(this.imgBarrierRight, 320 + 4, 240 - 12),
-                new Barrier(this.imgBarrierSolid, 320 + 4, 240 - 4),
-                new Barrier(this.imgBarrierSolid, 320 + 4, 240 + 4)
-            })
-        );
+        this.barriers = new ArrayList<Barrier>();
+        Barrier.resetBarriers(this.barriers);
 
-
-        this.movingLeft = false;
-        this.movingRight = false;
 
     }
 
@@ -89,7 +81,6 @@ public class App extends PApplet {
         // If invader shoot countdown has finished, add a new invader projectile to the projectile list
         Invader.tickShootCountdown();
         if (Invader.shouldInvadersShoot()) {
-            System.out.println("Shooting");
             this.projectiles.add(Invader.shootFromInvader(this.invaders));
         }
 

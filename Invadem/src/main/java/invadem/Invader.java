@@ -15,7 +15,7 @@ public class Invader implements Drawable, Collidable {
 
     // Variables to keep track of when invader swarm should shoot
     private final static int MIN_INVADER_SHOOT_TICKS = 60;
-    private final static int MAX_INVADER_SHOOT_TICKS = 60 * 5;
+    private final static int MAX_INVADER_SHOOT_TICKS = 60 * 3;
     private static int shootCountdown = 0;
 
     // Store invader resources
