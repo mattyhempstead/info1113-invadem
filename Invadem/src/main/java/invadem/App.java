@@ -1,15 +1,41 @@
 package invadem;
 
+import java.util.ArrayList;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class App extends PApplet {
+    private ArrayList<Projectile> projectiles;
+    
+    private Tank tank;
+    
+    private boolean movingLeft;
+    private boolean movingRight;
 
-    public App() {
-        //Set up your objects
-    }
+    // Load resources
+    private PImage imgTank;
+    private PImage imgProjectile;
 
     public void setup() {
         frameRate(60);
+        // rectMode(CENTER);   // Draw all rectangles from the center
+
+
+        this.projectiles = new ArrayList<Projectile>();
+
+        this.tank = new Tank();
+
+        this.movingLeft = false;
+        this.movingRight = false;
+
+
+
+
+        // Maybe pass in the image sprites to the constructors
+        // Maybe load the images here and then pass the image objects in the draw method
+        this.imgTank = this.loadImage("tank1.png");
+        this.imgProjectile = this.loadImage("projectile.png");
+
     }
 
     public void settings() {
@@ -18,6 +44,53 @@ public class App extends PApplet {
 
     public void draw() { 
         //Main Game Loop
+        background(0);
+
+        // System.out.println("test");
+
+        if (this.movingLeft) tank.moveLeft();
+        if (this.movingRight) tank.moveRight();
+
+
+
+        for (Projectile proj : this.projectiles) {
+            proj.draw(this, this.imgProjectile);
+        }
+
+        tank.draw(this, this.imgTank);
+
+
+    }
+
+    public void keyPressed() {
+        System.out.println(keyCode);
+        switch (keyCode) {
+            case 37:
+                this.movingLeft = true;
+                break;
+            case 39:
+                this.movingRight = true;
+                break;
+            case 32:
+                this.projectiles.add(tank.fire());
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void keyReleased() {
+        // System.out.println("released - " + keyCode);
+        switch (keyCode) {
+            case 37:
+                this.movingLeft = false;
+                break;
+            case 39:
+                this.movingRight = false;
+                break;
+            default:
+                break;
+        }
     }
 
     public static void main(String[] args) {
