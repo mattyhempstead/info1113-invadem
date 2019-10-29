@@ -220,22 +220,21 @@ public class App extends PApplet {
             case 39:
                 this.movingRight = true;
                 break;
-            case 32:
-                this.projectiles.add(tank.fire());
-                break;
             default:
                 break;
         }
     }
 
     public void keyReleased() {
-        // System.out.println("released - " + keyCode);
         switch (keyCode) {
             case 37:
                 this.movingLeft = false;
                 break;
             case 39:
                 this.movingRight = false;
+                break;
+            case 32:
+                this.projectiles.add(tank.fire());
                 break;
             default:
                 break;
