@@ -11,7 +11,6 @@ public class App extends PApplet {
     private PImage imgNextLevel;
     private PImage imgGameOver;
 
-    private Tank tank;
     private boolean movingLeft;
     private boolean movingRight;
 
@@ -33,8 +32,7 @@ public class App extends PApplet {
         Projectile.loadResources(this);
         Barrier.loadResources(this);
 
-
-        this.tank = new Tank();
+        Tank.resetTank();
         this.movingLeft = false;
         this.movingRight = false;
 
@@ -85,8 +83,8 @@ public class App extends PApplet {
 
     public void drawGame() {
 
-        if (this.movingLeft) this.tank.moveLeft();
-        if (this.movingRight) this.tank.moveRight();
+        if (this.movingLeft) Tank.getTank().moveLeft();
+        if (this.movingRight) Tank.getTank().moveRight();
 
         // If invader shoot countdown has finished, add a new invader projectile to the projectile list
         Invader.tickShootCountdown();
@@ -96,7 +94,7 @@ public class App extends PApplet {
 
 
         // Draw and tick tank
-        tank.draw(this);
+        Tank.drawTanks(this);
 
         // Draw and tick invaders
         Invader.drawInvaders(this);   
@@ -122,22 +120,10 @@ public class App extends PApplet {
             Barrier.checkProjectileCollision(proj); 
 
             // Check invader collision from friendly projectiles
-            if (proj.isFriendly()) {
-                Invader.checkProjectileCollision(proj);
-            }
+            Invader.checkProjectileCollision(proj);
 
-            // Check invader collision with tank
-            if (!proj.isFriendly() && Collidable.isColliding(proj, this.tank)) {
-                proj.hit();
-                this.tank.hit();
-
-                // Check for game over from destruction by projectiles
-                if (this.tank.isDestroyed()) {
-                    this.changeGameState(2);
-                    return;
-                }
-            }
-
+            // Check invader projectile collision with tank
+            Tank.checkProjectileCollision(proj); 
         }
 
         // Remove any projectiles/barriers/invaders which are destroyed
@@ -149,7 +135,13 @@ public class App extends PApplet {
         if (Invader.getInvaders().size() == 0) {
             this.changeGameState(1);
         }
-
+        
+        // Check for game over from destruction by projectiles
+        if (Tank.getTank().isDestroyed()) {
+            this.changeGameState(2);
+            return;
+        }
+ 
     }
 
     /**
@@ -167,10 +159,10 @@ public class App extends PApplet {
             this.changeGameState(0);
 
             // Reset game for next level
+            Tank.resetTank();
             Invader.resetInvaders();
             Barrier.resetBarriers();
             this.projectiles.clear();
-            this.tank = new Tank();
         }
     }
 
@@ -208,7 +200,7 @@ public class App extends PApplet {
                 this.movingRight = false;
                 break;
             case 32:
-                this.projectiles.add(tank.fire());
+                this.projectiles.add(Tank.getTank().fire());
                 break;
             default:
                 break;

@@ -3,6 +3,8 @@ package invadem;
 import processing.core.PImage;
 
 public class Tank implements Drawable, Collidable {
+    private static Tank tank;
+
     private int posX;
     private int posY;
     private int width;
@@ -25,6 +27,21 @@ public class Tank implements Drawable, Collidable {
      */
     public static void loadResources(App app) {
         Tank.imgTank = app.loadImage("tank1.png");
+    }
+
+    public static void resetTank() {
+        Tank.tank = new Tank();
+    }
+
+    public static Tank getTank() {
+        return Tank.tank;
+    }
+
+    public static void checkProjectileCollision(Projectile proj) {
+        if (!proj.isFriendly() && Collidable.isColliding(proj, Tank.tank)) {
+            proj.hit();
+            Tank.tank.hit();
+        }
     }
 
     public int getPosX() {
@@ -75,6 +92,10 @@ public class Tank implements Drawable, Collidable {
             this.posY,
             true
         );
+    }
+
+    public static void drawTanks(App app) {
+        Tank.tank.draw(app);
     }
 
     public void draw(App app) {

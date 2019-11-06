@@ -101,6 +101,9 @@ public class Invader implements Drawable, Collidable {
      * Hit any invaders which are colliding with a particular projectile
      */
     public static void checkProjectileCollision(Projectile proj) {
+        // Only collide invaders with friendly projectiles
+        if (!proj.isFriendly()) return;
+ 
         for (Invader invader : Invader.invaders) {
             if (Collidable.isColliding(proj, invader)) {
                 invader.hit();
