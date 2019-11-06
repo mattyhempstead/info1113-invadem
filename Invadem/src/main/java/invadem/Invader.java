@@ -40,10 +40,9 @@ public class Invader implements Drawable, Collidable {
 
     /**
      * Load sprites statically into the Invader class
-     * @param imgInvader   Array of both invader sprites
      */
-    public static void loadResources(PImage[] imgInvader) {
-        Invader.imgInvader = imgInvader;
+    public static void loadResources(App app) {
+        Invader.imgInvader = new PImage[] { app.loadImage("invader1.png"), app.loadImage("invader2.png") };
     }
 
     /**

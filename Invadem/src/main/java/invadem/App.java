@@ -28,15 +28,10 @@ public class App extends PApplet {
 
         // Some resources are loaded and stored in static variables in their respective classes
         // This prevents the need to reload resources each time they are needed by a new object
-        Tank.loadResources( loadImage("tank1.png") );
-        Invader.loadResources( new PImage[] { loadImage("invader1.png"), loadImage("invader2.png") } );
-        Projectile.loadResources( loadImage("projectile.png") );
-        Barrier.loadResources(
-            new PImage[] { loadImage("barrier_left1.png"),  loadImage("barrier_left2.png"),  loadImage("barrier_left3.png")  },
-            new PImage[] { loadImage("barrier_right1.png"), loadImage("barrier_right2.png"), loadImage("barrier_right3.png") },
-            new PImage[] { loadImage("barrier_solid1.png"), loadImage("barrier_solid2.png"), loadImage("barrier_solid3.png") },
-            new PImage[] { loadImage("barrier_top1.png"),   loadImage("barrier_top2.png"),   loadImage("barrier_top3.png")   }
-        );
+        Tank.loadResources(this);
+        Invader.loadResources(this);
+        Projectile.loadResources(this);
+        Barrier.loadResources(this);
 
 
         this.tank = new Tank();

@@ -22,10 +22,9 @@ public class Tank implements Drawable, Collidable {
 
     /**
      * Load sprites statically into the Tank class
-     * @param imgTank   The main tank sprite
      */
-    public static void loadResources(PImage imgTank) {
-        Tank.imgTank = imgTank;
+    public static void loadResources(App app) {
+        Tank.imgTank = app.loadImage("tank1.png");
     }
 
     public int getPosX() {

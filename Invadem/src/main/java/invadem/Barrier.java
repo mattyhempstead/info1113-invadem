@@ -32,16 +32,12 @@ public class Barrier implements Drawable, Collidable {
 
     /**
      * Loads sprites statically into the barrier class
-     * @param imgLeft   Array of left barrier sprites
-     * @param imgRight  Array of right barrier sprites
-     * @param imgSolid  Array of solid barrier sprites
-     * @param imgTop    Array of top barrier sprites
      */
-    public static void loadResources(PImage[] imgLeft, PImage[] imgRight, PImage[] imgSolid, PImage[] imgTop) {
-        Barrier.imgLeft = imgLeft;
-        Barrier.imgRight = imgRight;
-        Barrier.imgSolid = imgSolid;
-        Barrier.imgTop = imgTop;
+    public static void loadResources(App app) {
+        Barrier.imgLeft =  new PImage[] { app.loadImage("barrier_left1.png"),  app.loadImage("barrier_left2.png"),  app.loadImage("barrier_left3.png")  };
+        Barrier.imgRight = new PImage[] { app.loadImage("barrier_right1.png"), app.loadImage("barrier_right2.png"), app.loadImage("barrier_right3.png") };
+        Barrier.imgSolid = new PImage[] { app.loadImage("barrier_solid1.png"), app.loadImage("barrier_solid2.png"), app.loadImage("barrier_solid3.png") };
+        Barrier.imgTop =   new PImage[] { app.loadImage("barrier_top1.png"),   app.loadImage("barrier_top2.png"),   app.loadImage("barrier_top3.png")   };
     }
 
     /**

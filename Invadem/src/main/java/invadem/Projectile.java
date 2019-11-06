@@ -23,10 +23,9 @@ public class Projectile implements Drawable, Collidable {
 
     /**
      * Load sprites statically into the Projectile class
-     * @param imgProj   The main projectile sprite
      */
-    public static void loadResources(PImage imgProj) {
-        Projectile.imgProj = imgProj;
+    public static void loadResources(App app) {
+        Projectile.imgProj = app.loadImage("projectile.png");
     }
 
     public int getPosX() {
