@@ -6,6 +6,8 @@
 */.classpath
 */.project
 
+# Vim creates these file temporarily
+*.swp
 
 # Ignore Gradle GUI config
 gradle-app.setting
