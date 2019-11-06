@@ -5,5 +5,6 @@ package invadem;
  * This method should draw the object to the given App instance
  */
 public interface Drawable {
-    public void draw(App app);
+    static void loadResources(App app) {};
+    void draw(App app);
 }
