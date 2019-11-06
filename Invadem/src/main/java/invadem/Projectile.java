@@ -1,8 +1,11 @@
 package invadem;
 
+import java.util.ArrayList;
 import processing.core.PImage;
 
 public class Projectile implements Drawable, Collidable {
+    private static ArrayList<Projectile> projectiles = new ArrayList<>();
+
     private int posX;
     private int posY;
     private int width;
@@ -26,6 +29,18 @@ public class Projectile implements Drawable, Collidable {
      */
     public static void loadResources(App app) {
         Projectile.imgProj = app.loadImage("projectile.png");
+    }
+
+    public static void resetProjectiles() {
+        Projectile.projectiles.clear();
+    }
+
+    public static ArrayList<Projectile> getProjectiles() {
+        return Projectile.projectiles;
+    }
+
+    public static void addProjectile(Projectile proj) {
+        Projectile.projectiles.add(proj);
     }
 
     public int getPosX() {
@@ -62,6 +77,26 @@ public class Projectile implements Drawable, Collidable {
         // Destroy if projectile leaves map
         if (this.posY < 0 || this.posY > 480) {
             this.destroyed = true;
+        }
+
+
+        /// Check if projectile has collided with any objects
+
+        // Check barrier collision
+        Barrier.checkProjectileCollision(this); 
+
+        // Check invader collision from friendly projectiles
+        Invader.checkProjectileCollision(this);
+
+        // Check invader projectile collision with tank
+        Tank.checkProjectileCollision(this); 
+
+    }
+
+    public static void drawProjectiles(App app) {
+        // Draw and tick projectiles
+        for (Projectile proj : Projectile.projectiles) {
+            proj.draw(app);
         }
     }
 
