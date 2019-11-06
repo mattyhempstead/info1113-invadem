@@ -5,6 +5,17 @@ import java.lang.Math;
 import processing.core.PImage;
 
 public class Invader implements Drawable, Collidable {
+    private static ArrayList<Invader> invaders = new ArrayList<>();
+
+    private static int tickCounter = 0;
+    
+    // Variables to keep track of when invader swarm should shoot
+    private static int shootCountdownTickLength = 60 * 5;
+    private static int shootCountdown = 0;
+ 
+    // Store invader resources
+    private static PImage[] imgInvader;
+    
     private int posX;
     private int posY;
     private int width;
@@ -12,15 +23,7 @@ public class Invader implements Drawable, Collidable {
     private boolean destroyed;
     private int stateNum;
     private int stateTick;
-
-    // Variables to keep track of when invader swarm should shoot
-    private final static int MIN_INVADER_SHOOT_TICKS = 60;
-    private final static int MAX_INVADER_SHOOT_TICKS = 60 * 3;
-    private static int shootCountdown = 0;
-
-    // Store invader resources
-    private static PImage[] imgInvader;
-    
+   
     public Invader(int posX, int posY) {
 
         this.destroyed = false;
@@ -45,28 +48,33 @@ public class Invader implements Drawable, Collidable {
 
     /**
      * Resets all invaders to their initial 4x10 grid state
-     * @param invaders a reference to the ArrayList of invaders
      */
-    public static void resetInvaders(ArrayList<Invader> invaders) {
+    public static void resetInvaders() {
         // Clear the barriers list before adding new ones
-        invaders.clear();
+        Invader.invaders.clear();
 
         // Add 4x10 grid of invaders
         for (int i=0; i<40; i++) {
-            invaders.add(new Invader(
+            Invader.invaders.add(new Invader(
                 320 - 9 + (i%10 - 5) * 28, 
                 50 + (i/10) * 32
             ));
         }
     }
+    
+    /**
+     * Returns the list of invaders
+     */
+    public static ArrayList<Invader> getInvaders() {
+        return Invader.invaders;
+    }
 
     /**
      * Decrements the shoot countdown for invaders and resets when it reaches 0
-     * Will reset to a random integer between MIN_INVADER_SHOOT_TICKS and MAX_INVADER_SHOOT_TICKS
      */
     public static void tickShootCountdown() {
         if (shootCountdown == 0) {
-            shootCountdown = (int) (Math.random() * (MAX_INVADER_SHOOT_TICKS - MIN_INVADER_SHOOT_TICKS) + MIN_INVADER_SHOOT_TICKS);
+            shootCountdown = Invader.shootCountdownTickLength;
         } else {
             shootCountdown--;
         }
@@ -81,12 +89,25 @@ public class Invader implements Drawable, Collidable {
     }
 
     /**
-     * Spawns a new invader projectile coming from a random invader in a list
+     * Spawns a new invader projectile coming from a random invader
      * @return the projectile object
      */
-    public static Projectile shootFromInvader(ArrayList<Invader> invaders) {
-        Invader randomInvader = invaders.get((int) (Math.random() * invaders.size()));
+    public static Projectile shootFromInvader() {
+        int randomInvaderIndex = (int) (Math.random() * Invader.invaders.size());
+        Invader randomInvader = Invader.invaders.get(randomInvaderIndex);
         return randomInvader.fire();
+    }
+ 
+    /**
+     * Hit any invaders which are colliding with a particular projectile
+     */
+    public static void checkProjectileCollision(Projectile proj) {
+        for (Invader invader : Invader.invaders) {
+            if (Collidable.isColliding(proj, invader)) {
+                invader.hit();
+                proj.hit();
+            }
+        }
     }
 
     public int getPosX() {
@@ -113,8 +134,17 @@ public class Invader implements Drawable, Collidable {
         return this.destroyed;
     }
 
-    public boolean hasReachedBarriers() {
-        return this.posY + this.height >= 400 - 12;
+    /**
+     * Returns whether or not any invaders have reached the barriers
+     * @return  Boolean of whether any invader has reacher barrier
+     */
+    public static boolean hasReachedBarriers() {
+        for (Invader invader : Invader.invaders) {
+            if (invader.getPosY() + invader.getHeight() >= 400 - 12) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -173,6 +203,19 @@ public class Invader implements Drawable, Collidable {
 
     }
 
+    public static void drawInvaders(App app) {
+        Invader.tickCounter++;
+
+        // Draw all invaders
+        for (Invader invader : Invader.invaders) {
+            invader.draw(app);
+        }
+    }
+
+    /**
+     * Draws the instance invader to the screen
+     * @param App   The app to draw the invader on 
+     */
     public void draw(App app) {
         app.image(
             imgInvader[this.stateNum % 2], 
@@ -181,6 +224,9 @@ public class Invader implements Drawable, Collidable {
             this.width, 
             this.height
         );
-        tick();
+
+        // Move invaders every second frame
+        if (Invader.tickCounter%2 == 0) tick();
     }
 }
+

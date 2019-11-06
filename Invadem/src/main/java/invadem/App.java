@@ -17,7 +17,6 @@ public class App extends PApplet {
 
     private ArrayList<Projectile> projectiles;
     private ArrayList<Barrier> barriers;
-    private ArrayList<Invader> invaders;
 
     public void setup() {
         frameRate(60);
@@ -48,8 +47,7 @@ public class App extends PApplet {
         this.projectiles = new ArrayList<Projectile>();
 
         // Create invaders
-        this.invaders = new ArrayList<Invader>();
-        Invader.resetInvaders(this.invaders);
+        Invader.resetInvaders();
 
         // Create barriers
         this.barriers = new ArrayList<Barrier>();
@@ -101,7 +99,7 @@ public class App extends PApplet {
         // If invader shoot countdown has finished, add a new invader projectile to the projectile list
         Invader.tickShootCountdown();
         if (Invader.shouldInvadersShoot()) {
-            this.projectiles.add(Invader.shootFromInvader(this.invaders));
+            this.projectiles.add(Invader.shootFromInvader());
         }
 
 
@@ -109,14 +107,12 @@ public class App extends PApplet {
         tank.draw(this);
 
         // Draw and tick invaders
-        for (Invader invader : this.invaders) {
-            invader.draw(this);
+        Invader.drawInvaders(this);   
 
-            // Check for game over state by invader reaching barriers
-            if (invader.hasReachedBarriers()) {
-                changeGameState(2);
-                return;
-            }
+        // Game over if invaders have reached barriers
+        if (Invader.hasReachedBarriers()) {
+            this.changeGameState(2);
+            return;
         }
 
         // Draw barriers
@@ -143,12 +139,7 @@ public class App extends PApplet {
 
             // Check invader collision from friendly projectiles
             if (proj.isFriendly()) {
-                for (Invader invader: this.invaders) {
-                    if (Collidable.isColliding(proj, invader)) {
-                        proj.hit();
-                        invader.hit();
-                    }
-                }    
+                Invader.checkProjectileCollision(proj);
             }
 
             // Check invader collision with tank
@@ -168,11 +159,10 @@ public class App extends PApplet {
         // Remove any projectiles/barriers/invaders which are destroyed
         this.projectiles.removeIf(proj -> proj.isDestroyed());
         this.barriers.removeIf(barrier -> barrier.isDestroyed());
-        this.invaders.removeIf(invader -> invader.isDestroyed());
-
-
+        Invader.getInvaders().removeIf(invader -> invader.isDestroyed());
+        
         // Check for next level
-        if (invaders.size() == 0) {
+        if (Invader.getInvaders().size() == 0) {
             this.changeGameState(1);
         }
 
@@ -193,7 +183,7 @@ public class App extends PApplet {
             this.changeGameState(0);
 
             // Reset game for next level
-            Invader.resetInvaders(this.invaders);
+            Invader.resetInvaders();
             Barrier.resetBarriers(this.barriers);
             this.projectiles.clear();
             this.tank = new Tank();
