@@ -16,7 +16,6 @@ public class App extends PApplet {
     private boolean movingRight;
 
     private ArrayList<Projectile> projectiles;
-    private ArrayList<Barrier> barriers;
 
     public void setup() {
         frameRate(60);
@@ -50,9 +49,7 @@ public class App extends PApplet {
         Invader.resetInvaders();
 
         // Create barriers
-        this.barriers = new ArrayList<Barrier>();
-        Barrier.resetBarriers(this.barriers);
-
+        Barrier.resetBarriers();
 
     }
 
@@ -116,26 +113,18 @@ public class App extends PApplet {
         }
 
         // Draw barriers
-        for (Barrier barrier : this.barriers) {
-            barrier.draw(this);
-        }
+        Barrier.drawBarriers(this);
 
         // Draw and tick projectiles
         for (Projectile proj : this.projectiles) {
             proj.draw(this);
-
 
             // Check if projectile has collided with any objects
             // We are allowing projectiles to collide with two objects at once,
             // assuming both objects are simultaneously colliding with the projectile.
 
             // Check barrier collision
-            for (Barrier barrier : this.barriers) {
-                if (Collidable.isColliding(proj, barrier)) {
-                    proj.hit();
-                    barrier.hit();
-                }
-            }
+            Barrier.checkProjectileCollision(proj); 
 
             // Check invader collision from friendly projectiles
             if (proj.isFriendly()) {
@@ -158,7 +147,7 @@ public class App extends PApplet {
 
         // Remove any projectiles/barriers/invaders which are destroyed
         this.projectiles.removeIf(proj -> proj.isDestroyed());
-        this.barriers.removeIf(barrier -> barrier.isDestroyed());
+        Barrier.getBarriers().removeIf(barrier -> barrier.isDestroyed());
         Invader.getInvaders().removeIf(invader -> invader.isDestroyed());
         
         // Check for next level
@@ -184,7 +173,7 @@ public class App extends PApplet {
 
             // Reset game for next level
             Invader.resetInvaders();
-            Barrier.resetBarriers(this.barriers);
+            Barrier.resetBarriers();
             this.projectiles.clear();
             this.tank = new Tank();
         }

@@ -4,16 +4,18 @@ import java.util.ArrayList;
 import processing.core.PImage;
 
 public class Barrier implements Drawable, Collidable {
-    private int posX;
-    private int posY;
-    private int width;
-    private int height;
-    private int health;
+    private static ArrayList<Barrier> barriers = new ArrayList<>();
 
     private static PImage[] imgLeft;
     private static PImage[] imgRight;
     private static PImage[] imgSolid;
     private static PImage[] imgTop;
+
+    private int posX;
+    private int posY;
+    private int width;
+    private int height;
+    private int health;
 
     private PImage[] imgBarrierArray;
     
@@ -46,21 +48,34 @@ public class Barrier implements Drawable, Collidable {
      * Resets all barriers to their initial state
      * @param barriers a reference to the ArrayList of barriers
      */
-    public static void resetBarriers(ArrayList<Barrier> barriers) {
+    public static void resetBarriers() {
         // Clear the barriers list before adding new ones
-        barriers.clear();
+        Barrier.barriers.clear();
 
         // Add a 3 full barriers spread across the bottom
         for (int i=-1; i<=1; i++) {
-            barriers.add(new Barrier(imgSolid,  320 + i*100 - 12,   400 + 4));
-            barriers.add(new Barrier(imgSolid,  320 + i*100 - 12,   400 - 4));
-            barriers.add(new Barrier(imgLeft,   320 + i*100 - 12,   400 - 12));
-            barriers.add(new Barrier(imgTop,    320 + i*100 - 4,    400 - 12));
-            barriers.add(new Barrier(imgRight,  320 + i*100 + 4,    400 - 12));
-            barriers.add(new Barrier(imgSolid,  320 + i*100 + 4,    400 - 4));
-            barriers.add(new Barrier(imgSolid,  320 + i*100 + 4,    400 + 4));
+            Barrier.barriers.add(new Barrier(imgSolid,  320 + i*100 - 12,   400 + 4));
+            Barrier.barriers.add(new Barrier(imgSolid,  320 + i*100 - 12,   400 - 4));
+            Barrier.barriers.add(new Barrier(imgLeft,   320 + i*100 - 12,   400 - 12));
+            Barrier.barriers.add(new Barrier(imgTop,    320 + i*100 - 4,    400 - 12));
+            Barrier.barriers.add(new Barrier(imgRight,  320 + i*100 + 4,    400 - 12));
+            Barrier.barriers.add(new Barrier(imgSolid,  320 + i*100 + 4,    400 - 4));
+            Barrier.barriers.add(new Barrier(imgSolid,  320 + i*100 + 4,    400 + 4));
         }
 
+    }
+
+    public static ArrayList<Barrier> getBarriers() {
+        return Barrier.barriers;
+    } 
+
+    public static void checkProjectileCollision(Projectile proj) {
+        for (Barrier barrier : Barrier.barriers) {
+            if (Collidable.isColliding(proj, barrier)) {
+                proj.hit();
+                barrier.hit();
+            }
+        }
     }
 
     public int getPosX() {
@@ -84,9 +99,15 @@ public class Barrier implements Drawable, Collidable {
             this.health--;
         }
     }
-
+    
     public boolean isDestroyed() {
         return this.health == 0;
+    }
+
+    public static void drawBarriers(App app) {
+        for (Barrier barrier : Barrier.barriers) {
+            barrier.draw(app);
+        }
     }
 
     public void draw(App app) {
@@ -99,3 +120,4 @@ public class Barrier implements Drawable, Collidable {
         );
     }
 }
+
