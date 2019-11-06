@@ -84,13 +84,6 @@ public class App extends PApplet {
         if (this.movingLeft) Tank.getTank().moveLeft();
         if (this.movingRight) Tank.getTank().moveRight();
 
-        // If invader shoot countdown has finished, add a new invader projectile to the projectile list
-        Invader.tickShootCountdown();
-        if (Invader.shouldInvadersShoot()) {
-            Projectile.addProjectile(Invader.shootFromInvader());
-        }
-
-
         // Draw and tick tank
         Tank.drawTanks(this);
 

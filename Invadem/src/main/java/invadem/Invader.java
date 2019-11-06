@@ -212,6 +212,14 @@ public class Invader implements Drawable, Collidable {
         for (Invader invader : Invader.invaders) {
             invader.draw(app);
         }
+
+
+        // If invader shoot countdown has finished, add a new invader projectile to the projectile list
+        Invader.tickShootCountdown();
+        if (Invader.shouldInvadersShoot()) {
+            Projectile.addProjectile(Invader.shootFromInvader());
+        }
+
     }
 
     /**
