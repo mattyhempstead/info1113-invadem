@@ -18,7 +18,6 @@ public class Button extends GameObject {
     public void mouseClicked(int mouseX, int mouseY) {
         if (this.posX <= mouseX && mouseX <= this.posX + width &&
             this.posY <= mouseY && mouseY <= this.posY + height) {
-            System.out.println("pressed me" + this.text);
             this.action.run();
         }
     }
