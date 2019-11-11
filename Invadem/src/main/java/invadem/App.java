@@ -52,6 +52,10 @@ public class App extends PApplet {
         this.gameState.keyReleased(keyCode);
     }
 
+    public void mouseClicked() {
+        this.gameState.mouseClicked(mouseX, mouseY);
+    }
+
     public boolean getMode() {
         return this.twoPlayer;
     }
