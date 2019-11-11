@@ -2,13 +2,9 @@ package invadem;
 
 import processing.core.PImage;
 
-public class Tank implements Drawable, Collidable {
+public class Tank extends Entity {
     private static Tank tank;
 
-    private int posX;
-    private int posY;
-    private int width;
-    private int height;
     private int health;
 
     private static PImage imgTank;
@@ -44,22 +40,6 @@ public class Tank implements Drawable, Collidable {
         }
     }
 
-    public int getPosX() {
-        return this.posX;
-    }
-
-    public int getPosY() {
-        return this.posY;
-    }
-
-    public int getWidth() {
-        return this.width;
-    }
-    
-    public int getHeight() {
-        return this.height;
-    }
-
     public void moveLeft() {
         if (this.posX > 180) {
             this.posX -= 1;
@@ -72,14 +52,11 @@ public class Tank implements Drawable, Collidable {
         }
     }
 
+    @Override
     public void hit() {
-        if (this.health > 0) {
-            this.health--;
+        if (--this.health <= 0) {
+            this.destroyed = true;
         }
-    }
-
-    public boolean isDestroyed() {
-        return this.health == 0;
     }
 
     /**

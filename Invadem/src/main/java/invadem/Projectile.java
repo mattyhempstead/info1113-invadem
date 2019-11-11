@@ -3,15 +3,10 @@ package invadem;
 import java.util.ArrayList;
 import processing.core.PImage;
 
-public class Projectile implements Drawable, Collidable {
+public class Projectile extends Entity {
     private static ArrayList<Projectile> projectiles = new ArrayList<>();
 
-    private int posX;
-    private int posY;
-    private int width;
-    private int height;
     private boolean friendly;
-    private boolean destroyed;
 
     private static PImage imgProj;
 
@@ -21,7 +16,6 @@ public class Projectile implements Drawable, Collidable {
         this.width = 1;
         this.height = 3;
         this.friendly = friendly;
-        this.destroyed = false;
     }
 
     /**
@@ -31,6 +25,10 @@ public class Projectile implements Drawable, Collidable {
         Projectile.imgProj = app.loadImage("projectile.png");
     }
 
+    /**
+     * Reset projectiles for a new level
+     * This involves simply clearing the List of projectiles
+     */
     public static void resetProjectiles() {
         Projectile.projectiles.clear();
     }
@@ -43,35 +41,11 @@ public class Projectile implements Drawable, Collidable {
         Projectile.projectiles.add(proj);
     }
 
-    public int getPosX() {
-        return this.posX;
-    }
-
-    public int getPosY() {
-        return this.posY;
-    }
-
-    public int getWidth() {
-        return this.width;
-    }
-    
-    public int getHeight() {
-        return this.height;
-    }
-
     public boolean isFriendly() {
         return this.friendly;
     }
 
-    public boolean isDestroyed() {
-        return this.destroyed;
-    }
-
-    public void hit() {
-        this.destroyed = true;
-    }
-
-    private void tick() {
+    private void tick(App app) {
         this.posY += this.friendly ? -1 : 1;
 
         // Destroy if projectile leaves map
@@ -97,11 +71,11 @@ public class Projectile implements Drawable, Collidable {
         // Draw and tick projectiles
         for (Projectile proj : Projectile.projectiles) {
             proj.draw(app);
+            proj.tick(app);
         }
     }
 
     public void draw(App app) {
         app.image(imgProj, this.posX, this.posY, this.width, this.height);
-        tick();
     }
 }

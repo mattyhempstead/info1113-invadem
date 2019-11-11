@@ -3,7 +3,7 @@ package invadem;
 import java.util.ArrayList;
 import processing.core.PImage;
 
-public class Barrier implements Drawable, Collidable {
+public class Barrier extends Entity {
     private static ArrayList<Barrier> barriers = new ArrayList<>();
 
     private static PImage[] imgLeft;
@@ -11,14 +11,10 @@ public class Barrier implements Drawable, Collidable {
     private static PImage[] imgSolid;
     private static PImage[] imgTop;
 
-    private int posX;
-    private int posY;
-    private int width;
-    private int height;
     private int health;
 
     private PImage[] imgBarrierArray;
-    
+
     public Barrier(PImage[] imgBarrierArray, int posX, int posY) {
         this.imgBarrierArray = imgBarrierArray;
 
@@ -74,30 +70,11 @@ public class Barrier implements Drawable, Collidable {
         }
     }
 
-    public int getPosX() {
-        return this.posX;
-    }
-
-    public int getPosY() {
-        return this.posY;
-    }
-
-    public int getWidth() {
-        return this.width;
-    }
-    
-    public int getHeight() {
-        return this.height;
-    }
-
+    @Override
     public void hit() {
-        if (this.health > 0) {
-            this.health--;
+        if (--this.health <= 0) {
+            this.destroyed = true;
         }
-    }
-    
-    public boolean isDestroyed() {
-        return this.health == 0;
     }
 
     public static void drawBarriers(App app) {
@@ -116,4 +93,3 @@ public class Barrier implements Drawable, Collidable {
         );
     }
 }
-

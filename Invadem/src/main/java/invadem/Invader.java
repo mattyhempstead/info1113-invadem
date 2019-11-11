@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.lang.Math;
 import processing.core.PImage;
 
-public class Invader implements Drawable, Collidable {
+public class Invader extends Entity {
     private static ArrayList<Invader> invaders = new ArrayList<>();
 
     private static int tickCounter = 0;
@@ -16,17 +16,10 @@ public class Invader implements Drawable, Collidable {
     // Store invader resources
     private static PImage[] imgInvader;
     
-    private int posX;
-    private int posY;
-    private int width;
-    private int height;
-    private boolean destroyed;
     private int stateNum;
     private int stateTick;
    
     public Invader(int posX, int posY) {
-
-        this.destroyed = false;
         
         // Used to keep track of the animation cycle
         this.stateNum = 0;  // The current state of the Invader animation (0=right, 1=down, 2=left, 3=down)
@@ -110,30 +103,6 @@ public class Invader implements Drawable, Collidable {
                 proj.hit();
             }
         }
-    }
-
-    public int getPosX() {
-        return this.posX;
-    }
-
-    public int getPosY() {
-        return this.posY;
-    }
-
-    public int getWidth() {
-        return this.width;
-    }
-    
-    public int getHeight() {
-        return this.height;
-    }
-
-    public void hit() {
-        this.destroyed = true;
-    }
-
-    public boolean isDestroyed() {
-        return this.destroyed;
     }
 
     /**
