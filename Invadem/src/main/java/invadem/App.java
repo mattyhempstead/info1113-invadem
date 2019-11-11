@@ -30,7 +30,8 @@ public class App extends PApplet {
         Projectile.loadResources(this);
         PowerProjectile.loadResources(this);
         Barrier.loadResources(this);
-        
+
+        Menu.loadResources(this);
         NextLevel.loadResources(this);
         GameOver.loadResources(this);
     }

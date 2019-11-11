@@ -29,13 +29,11 @@ public class Button extends GameObject {
         app.rect(this.posX, this.posY, this.width, this.height);
         app.fill(255);
 
-
         app.textAlign(app.CENTER, app.CENTER);
         app.text(
             this.text,
             this.posX + this.width/2, 
             this.posY + this.height/2
         );
-
     }
 }

@@ -85,12 +85,12 @@ public class Tank extends Entity {
             // Draw each tank if they are not destroyed
 
             if (!Tank.tankA.isDestroyed()) {
-                app.tint(255, 65, 65);  // Tank A is tinted red
+                app.tint(65, 65, 255);  // Tank B is tinted blue
                 Tank.tankA.draw(app);
             }
 
             if (!Tank.tankB.isDestroyed()) {
-                app.tint(65, 65, 255);  // Tank B is tinted blue
+                app.tint(255, 65, 65);  // Tank A is tinted red
                 Tank.tankB.draw(app);
             }
 
