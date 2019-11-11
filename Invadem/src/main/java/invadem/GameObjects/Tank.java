@@ -8,13 +8,15 @@ public class Tank extends Entity {
 
     private static PImage imgTank;
     
-    public Tank() {
+    public Tank(int posX, int posY) {
         this.health = 3;
 
         this.width = 22;
         this.height = 16;
-        this.posX = (640 / 2) - (this.width / 2);
-        this.posY = 480 - this.height - 10;
+
+        // Centre tank on the specified position
+        this.posX = posX - (this.width / 2);
+        this.posY = posY - (this.height / 2);
     }
 
     /**
@@ -25,8 +27,13 @@ public class Tank extends Entity {
     }
 
     public static void resetTanks(boolean twoPlayer) {
-        Tank.tankA = new Tank();
-        if (twoPlayer) Tank.tankB = new Tank();
+        if (twoPlayer) {
+            Tank.tankA = new Tank(640 / 2 + 50, 480 - 18);
+            Tank.tankB = new Tank(640 / 2 - 50, 480 - 18);
+        } else {
+            Tank.tankA = new Tank(640 / 2, 480 - 18);
+            Tank.tankB = null;
+        }
     }
 
     public static Tank getTankA() {
@@ -74,8 +81,23 @@ public class Tank extends Entity {
     }
 
     public static void drawTanks(App app) {
-        if (!Tank.tankA.isDestroyed()) Tank.tankA.draw(app);
-        if (Tank.tankB != null && !Tank.tankB.isDestroyed()) Tank.tankB.draw(app);
+        if (app.getMode()) {
+            // Draw each tank if they are not destroyed
+
+            if (!Tank.tankA.isDestroyed()) {
+                app.tint(255, 65, 65);  // Tank A is tinted red
+                Tank.tankA.draw(app);
+            }
+
+            if (!Tank.tankB.isDestroyed()) {
+                app.tint(65, 65, 255);  // Tank B is tinted blue
+                Tank.tankB.draw(app);
+            }
+
+            app.tint(255);  // Remove tint
+        } else {
+            Tank.tankA.draw(app);
+        }
     }
 
     public void draw(App app) {
