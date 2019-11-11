@@ -3,7 +3,8 @@ package invadem;
 import processing.core.PImage;
 
 public class Tank extends Entity {
-    private static Tank tank;
+    private static Tank tankA;
+    private static Tank tankB;
 
     private static PImage imgTank;
     
@@ -23,17 +24,28 @@ public class Tank extends Entity {
         Tank.imgTank = app.loadImage("tank1.png");
     }
 
-    public static void resetTank() {
-        Tank.tank = new Tank();
+    public static void resetTanks(boolean twoPlayer) {
+        Tank.tankA = new Tank();
+        if (twoPlayer) Tank.tankB = new Tank();
     }
 
-    public static Tank getTank() {
-        return Tank.tank;
+    public static Tank getTankA() {
+        return Tank.tankA;
+    }
+
+    public static Tank getTankB() {
+        return Tank.tankB;
     }
 
     public static void checkProjectileCollision(Projectile proj) {
-        if (!proj.isFriendly() && Collidable.isColliding(proj, Tank.tank)) {
-            proj.hit(Tank.tank);
+        if (proj.isFriendly()) return;
+
+        if (Collidable.isColliding(proj, Tank.tankA)) {
+            proj.hit(Tank.tankA);
+        }
+
+        if (Tank.tankB != null && Collidable.isColliding(proj, Tank.tankB)) {
+            proj.hit(Tank.tankB);
         }
     }
 
@@ -62,11 +74,11 @@ public class Tank extends Entity {
     }
 
     public static void drawTanks(App app) {
-        Tank.tank.draw(app);
+        if (!Tank.tankA.isDestroyed()) Tank.tankA.draw(app);
+        if (Tank.tankB != null && !Tank.tankB.isDestroyed()) Tank.tankB.draw(app);
     }
 
     public void draw(App app) {
-        // app.rect(this.posX, this.posY, this.width, this.height);
         app.image(
             imgTank,
             this.posX,
