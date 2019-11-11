@@ -13,9 +13,12 @@ public class Invader extends Entity {
     private static int shootCountdownTickLength = 60 * 5;
     private static int shootCountdown = 0;
  
-    // Store invader resources
+    // Static variables to store Invader resources
     private static PImage[] imgInvader;
-    
+
+    // The actual image array invader is referencing
+    PImage[] imgRef;
+
     private int stateNum;
     private int stateTick;
    
@@ -29,13 +32,18 @@ public class Invader extends Entity {
         this.height = 16;
         this.posX = posX;
         this.posY = posY;
+
+        this.imgRef = imgInvader;
     }
 
     /**
      * Load sprites statically into the Invader class
      */
     public static void loadResources(App app) {
-        Invader.imgInvader = new PImage[] { app.loadImage("invader1.png"), app.loadImage("invader2.png") };
+        Invader.imgInvader = new PImage[] {
+            app.loadImage("invader1.png"),
+            app.loadImage("invader2.png")
+        };
     }
 
     /**
@@ -47,13 +55,22 @@ public class Invader extends Entity {
 
         // Add 4x10 grid of invaders
         for (int i=0; i<40; i++) {
-            Invader.invaders.add(new Invader(
-                320 - 9 + (i%10 - 5) * 28, 
-                50 + (i/10) * 32
-            ));
+            int posX = 320 - 9 + (i%10 - 5) * 28;
+            int posY = 50 + (i/10) * 32;
+            switch (i/10) {
+                case 0:
+                    Invader.invaders.add(new ArmouredInvader(posX, posY));
+                    break;
+                case 1:
+                    Invader.invaders.add(new PowerInvader(posX, posY));
+                    break;
+                default:
+                    Invader.invaders.add(new Invader(posX, posY));
+                    break;
+            }
         }
     }
-    
+
     /**
      * Returns the list of invaders
      */
@@ -99,8 +116,7 @@ public class Invader extends Entity {
  
         for (Invader invader : Invader.invaders) {
             if (Collidable.isColliding(proj, invader)) {
-                invader.hit();
-                proj.hit();
+                proj.hit(invader);
             }
         }
     }
@@ -197,10 +213,10 @@ public class Invader extends Entity {
      */
     public void draw(App app) {
         app.image(
-            imgInvader[this.stateNum % 2], 
-            this.posX, 
+            this.imgRef[this.stateNum % 2],
+            this.posX,
             this.posY,
-            this.width, 
+            this.width,
             this.height
         );
 
@@ -208,4 +224,3 @@ public class Invader extends Entity {
         if (Invader.tickCounter%2 == 0) tick();
     }
 }
-

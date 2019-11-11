@@ -5,8 +5,6 @@ import processing.core.PImage;
 public class Tank extends Entity {
     private static Tank tank;
 
-    private int health;
-
     private static PImage imgTank;
     
     public Tank() {
@@ -35,8 +33,7 @@ public class Tank extends Entity {
 
     public static void checkProjectileCollision(Projectile proj) {
         if (!proj.isFriendly() && Collidable.isColliding(proj, Tank.tank)) {
-            proj.hit();
-            Tank.tank.hit();
+            proj.hit(Tank.tank);
         }
     }
 
@@ -49,13 +46,6 @@ public class Tank extends Entity {
     public void moveRight() {
         if (this.posX < 460) {
             this.posX += 1;
-        }
-    }
-
-    @Override
-    public void hit() {
-        if (--this.health <= 0) {
-            this.destroyed = true;
         }
     }
 

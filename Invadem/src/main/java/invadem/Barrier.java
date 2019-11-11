@@ -64,16 +64,8 @@ public class Barrier extends Entity {
     public static void checkProjectileCollision(Projectile proj) {
         for (Barrier barrier : Barrier.barriers) {
             if (Collidable.isColliding(proj, barrier)) {
-                proj.hit();
-                barrier.hit();
+                proj.hit(barrier);
             }
-        }
-    }
-
-    @Override
-    public void hit() {
-        if (--this.health <= 0) {
-            this.destroyed = true;
         }
     }
 

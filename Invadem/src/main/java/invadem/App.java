@@ -27,7 +27,10 @@ public class App extends PApplet {
         // This prevents the need to reload resources each time they are needed by a new object
         Tank.loadResources(this);
         Invader.loadResources(this);
+        ArmouredInvader.loadResources(this);
+        PowerInvader.loadResources(this);
         Projectile.loadResources(this);
+        PowerProjectile.loadResources(this);
         Barrier.loadResources(this);
 
         this.movingRight = false;
@@ -181,4 +184,3 @@ public class App extends PApplet {
     }
 
 }
-

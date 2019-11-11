@@ -8,7 +8,11 @@ public class Projectile extends Entity {
 
     private boolean friendly;
 
+    // Static variables to store Projectile resources
     private static PImage imgProj;
+
+    // The actual image projectile is referencing
+    PImage imgRef;
 
     public Projectile(int posX, int posY, boolean friendly) {
         this.posX = posX;
@@ -16,6 +20,8 @@ public class Projectile extends Entity {
         this.width = 1;
         this.height = 3;
         this.friendly = friendly;
+
+        this.imgRef = Projectile.imgProj;
     }
 
     /**
@@ -43,6 +49,16 @@ public class Projectile extends Entity {
 
     public boolean isFriendly() {
         return this.friendly;
+    }
+
+    /**
+     * Runs when a Projectile collides with a Collidable object
+     * This will destroy the Projectile, and hit the Collidable object
+     * @param collided  The Collidable being collided with
+     */
+    public void hit(Collidable collided) {
+        this.destroy();
+        collided.hit();
     }
 
     private void tick(App app) {

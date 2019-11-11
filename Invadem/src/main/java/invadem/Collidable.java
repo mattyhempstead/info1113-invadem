@@ -9,6 +9,7 @@ public interface Collidable {
     public int getPosX();
     public int getPosY();
     public void hit();
+    public void destroy();
     public boolean isDestroyed();
     public static boolean isColliding(Collidable a, Collidable b) {
         // Don't allow objects which are destroyed to collide with others
