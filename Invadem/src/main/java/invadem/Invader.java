@@ -79,6 +79,16 @@ public class Invader extends Entity {
     }
 
     /**
+     * Decreases the shootCountdownTickLength to a minimum of 60 ticks (1 second)
+     */
+    public static void decreaseShootCountdownTickLength() {
+        shootCountdown = 0;
+        if (shootCountdownTickLength > 60) {
+            shootCountdownTickLength -= 60;
+        }
+    }
+
+    /**
      * Decrements the shoot countdown for invaders and resets when it reaches 0
      */
     public static void tickShootCountdown() {

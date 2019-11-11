@@ -135,6 +135,7 @@ public class App extends PApplet {
             Invader.resetInvaders();
             Barrier.resetBarriers();
             Projectile.resetProjectiles();
+            Invader.decreaseShootCountdownTickLength();
         }
     }
 
