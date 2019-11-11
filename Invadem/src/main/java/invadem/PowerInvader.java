@@ -9,6 +9,8 @@ public class PowerInvader extends Invader {
     public PowerInvader(int posX, int posY) {
         super(posX, posY);
 
+        this.points = 250;
+
         // Override image resource reference for PowerInvader
         this.imgRef = PowerInvader.imgPowerInvader;
     }

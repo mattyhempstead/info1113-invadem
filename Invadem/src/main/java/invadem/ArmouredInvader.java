@@ -9,6 +9,8 @@ public class ArmouredInvader extends Invader {
     public ArmouredInvader(int posX, int posY) {
         super(posX, posY);
 
+        this.points = 250;
+
         // Override default health of 1 for ArmouredInvaders
         this.health = 3;
 

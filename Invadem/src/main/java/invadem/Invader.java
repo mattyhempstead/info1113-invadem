@@ -10,11 +10,14 @@ public class Invader extends Entity {
     private static int tickCounter = 0;
     
     // Variables to keep track of when invader swarm should shoot
-    private static int shootCountdownTickLength = 60 * 5;
+    private static final int shootCountdownTickLengthInitial = 60 * 5;
+    private static int shootCountdownTickLength = shootCountdownTickLengthInitial;
     private static int shootCountdown = 0;
  
     // Static variables to store Invader resources
     private static PImage[] imgInvader;
+
+    int points;
 
     // The actual image array invader is referencing
     PImage[] imgRef;
@@ -27,6 +30,8 @@ public class Invader extends Entity {
         // Used to keep track of the animation cycle
         this.stateNum = 0;  // The current state of the Invader animation (0=right, 1=down, 2=left, 3=down)
         this.stateTick = 30; // The number of ticks until the next state
+
+        this.points = 100;
 
         this.width = 16;
         this.height = 16;
@@ -86,6 +91,14 @@ public class Invader extends Entity {
         if (shootCountdownTickLength > 60) {
             shootCountdownTickLength -= 60;
         }
+    }
+
+    /**
+     * Resets the shootCountdownTickLength back to its inital value
+     */
+    public static void resetShootCountdownTickLength() {
+        shootCountdown = 0;
+        shootCountdownTickLength = shootCountdownTickLengthInitial;
     }
 
     /**
@@ -154,6 +167,10 @@ public class Invader extends Entity {
             this.posY + (this.height / 2),
             false
         );
+    }
+
+    public int getPoints() {
+        return this.points;
     }
 
     public void tick() {

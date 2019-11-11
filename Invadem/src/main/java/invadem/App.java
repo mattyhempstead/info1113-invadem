@@ -3,10 +3,16 @@ package invadem;
 import java.util.ArrayList;
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.core.PFont;
 
 public class App extends PApplet {
     private int gameState;          // The current game state (0=playing game, 1=next level, 2=game over)
     private int gameStateTickCount; // The amount of ticks user has been in the current game state
+
+    private int highScore = 10000;
+    private int currScore = 0;
+    
+    private PFont font;
 
     private PImage imgNextLevel;
     private PImage imgGameOver;
@@ -19,6 +25,9 @@ public class App extends PApplet {
 
         this.gameState = 0;
         this.gameStateTickCount = 0;
+        
+        this.font = createFont("PressStart2P-Regular.ttf", 16);
+        textFont(this.font);
 
         this.imgNextLevel = loadImage("nextlevel.png");
         this.imgGameOver = loadImage("gameover.png");
@@ -77,7 +86,7 @@ public class App extends PApplet {
      * Changes the game state and resets the gameStateTickCount
      * @param gameState The new game state
      */
-    public void changeGameState(int gameState) {
+    public void setGameState(int gameState) {
         this.gameState = gameState;
         this.gameStateTickCount = 0;
     }
@@ -99,6 +108,12 @@ public class App extends PApplet {
         // Draw and tick projectiles
         Projectile.drawProjectiles(this);
 
+        // Add the points sum of all destroyed invaders
+        currScore += Invader.getInvaders()
+            .stream()
+            .filter(invader -> invader.isDestroyed())
+            .reduce(0, (sum, invader) -> sum + invader.getPoints(), Integer::sum);
+
         // Remove any projectiles/barriers/invaders which are destroyed
         Projectile.getProjectiles().removeIf(proj -> proj.isDestroyed());
         Barrier.getBarriers().removeIf(barrier -> barrier.isDestroyed());
@@ -106,14 +121,22 @@ public class App extends PApplet {
         
         // Check for next level
         if (Invader.getInvaders().size() == 0) {
-            this.changeGameState(1);
+            this.setGameState(1);
         }
         
         // Check for game over conditions
         if (Tank.getTank().isDestroyed() || Invader.hasReachedBarriers()) {
-            this.changeGameState(2);
+            this.setGameState(2);
         }
  
+        // Draw current score in top left
+        textAlign(LEFT, TOP);
+        text(this.currScore, 10, 10);
+
+        // Draw high score in top right
+        textAlign(RIGHT, TOP);
+        text(this.highScore, 640 - 10, 10);
+
     }
 
     /**
@@ -128,7 +151,7 @@ public class App extends PApplet {
 
         // Display next level message for 3 seconds
         if (this.gameStateTickCount == 60 * 3) {
-            this.changeGameState(0);
+            this.setGameState(0);
 
             // Reset game for next level
             Tank.resetTank();
@@ -149,6 +172,21 @@ public class App extends PApplet {
             (640 - 112) / 2,
             (480 - 16) / 2
         );
+
+        // Display game over message for 3 seconds
+        if (this.gameStateTickCount == 60 * 3) {
+            this.setGameState(0);
+
+            // Reset for new game
+            Tank.resetTank();
+            Invader.resetInvaders();
+            Barrier.resetBarriers();
+            Projectile.resetProjectiles();
+            Invader.resetShootCountdownTickLength();
+
+            if (currScore > highScore) highScore = currScore;
+            currScore = 0;
+        }
     }
 
     public void keyPressed() {
