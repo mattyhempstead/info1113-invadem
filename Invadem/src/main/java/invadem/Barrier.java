@@ -11,8 +11,6 @@ public class Barrier extends Entity {
     private static PImage[] imgSolid;
     private static PImage[] imgTop;
 
-    private int health;
-
     private PImage[] imgBarrierArray;
 
     public Barrier(PImage[] imgBarrierArray, int posX, int posY) {
