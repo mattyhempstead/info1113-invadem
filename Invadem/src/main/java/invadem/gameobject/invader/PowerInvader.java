@@ -6,6 +6,9 @@ import invadem.gameobject.projectile.PowerProjectile;
 
 import processing.core.PImage;
 
+/**
+ * A special type of Invader which fires PowerProjectiles
+ */
 public class PowerInvader extends Invader {
     // Static variables to store PowerInvader resources
     private static PImage[] imgPowerInvader;

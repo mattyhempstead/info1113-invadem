@@ -8,6 +8,9 @@ import invadem.gameobject.projectile.Projectile;
 
 import processing.core.PApplet;
 
+/**
+ * The game state representing a game of an Invadem with one player
+ */
 public class OnePlayer extends GameState {    
     int tickCount; // The amount of ticks user has been in the current game state
 

@@ -67,12 +67,20 @@ public class Tank extends Entity {
         }
     }
 
+    /**
+     * Moves the tank left by one pixel
+     * Does not allow the left side of the tank to go below 180
+     */
     public void moveLeft() {
         if (this.posX > 180) {
             this.posX -= 1;
         }
     }
 
+    /**
+     * Moves the tank right by one pixel
+     * Does not allow the right side of the tank to go above 460
+     */
     public void moveRight() {
         if (this.posX + this.width < 460) {
             this.posX += 1;
@@ -91,6 +99,10 @@ public class Tank extends Entity {
         );
     }
 
+    /**
+     * Draws either one white tank, or a red and blue tank, depending on the game mode
+     * @param app The Invadem App instance
+     */
     public static void drawTanks(App app) {
         if (app.getMode()) {
             // Draw each tank if they are not destroyed

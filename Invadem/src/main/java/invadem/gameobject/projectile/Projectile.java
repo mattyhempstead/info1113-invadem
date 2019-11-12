@@ -10,6 +10,9 @@ import invadem.gameobject.Entity;
 import java.util.ArrayList;
 import processing.core.PImage;
 
+/**
+ * A class representing the Projectiles shot from either Invaders or Tanks
+ */
 public class Projectile extends Entity {
     private static ArrayList<Projectile> projectiles = new ArrayList<>();
 

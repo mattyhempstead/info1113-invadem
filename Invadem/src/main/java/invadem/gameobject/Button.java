@@ -18,6 +18,11 @@ public class Button extends GameObject {
         this.action = action;
     }
 
+    /**
+     * Executes the Button action if a given set of coordinates lies within the buttons dimentions
+     * @param mouseX The x coordinate of the mouse
+     * @param mouseY The y coordinate of the mouse
+     */
     public void mouseClicked(int mouseX, int mouseY) {
         if (this.posX <= mouseX && mouseX <= this.posX + width &&
             this.posY <= mouseY && mouseY <= this.posY + height) {

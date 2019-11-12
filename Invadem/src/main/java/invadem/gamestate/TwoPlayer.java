@@ -4,6 +4,9 @@ import invadem.App;
 import invadem.gameobject.Tank;
 import invadem.gameobject.projectile.Projectile;
 
+/**
+ * A two player extension of the one player game mode
+ */
 public class TwoPlayer extends OnePlayer {
     private boolean movingLeftA;
     private boolean movingRightA;
@@ -14,6 +17,9 @@ public class TwoPlayer extends OnePlayer {
         super(app);
     }
 
+    /**
+     * Handle keyPresses for movement of both tanks
+     */
     @Override
     public void keyPressed(int keyCode) {
         switch (keyCode) {
@@ -34,6 +40,9 @@ public class TwoPlayer extends OnePlayer {
         }
     }
 
+    /**
+     * Handle keyReleases for movement and firing of both tanks
+     */
     @Override
     public void keyReleased(int keyCode) {
         switch (keyCode) {
@@ -60,6 +69,9 @@ public class TwoPlayer extends OnePlayer {
         }
     }
 
+    /**
+     * Move both tanks if particular keys have been pressed
+     */
     @Override
     public void handleTankMovement() {
         // Only allow movement if given tank is not destroyed

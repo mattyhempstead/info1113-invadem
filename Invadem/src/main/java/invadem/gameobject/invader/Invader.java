@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.lang.Math;
 import processing.core.PImage;
 
+/**
+ * A class representing a single entity in the invader swarm
+ */
 public class Invader extends Entity {
     private static ArrayList<Invader> invaders = new ArrayList<>();
 

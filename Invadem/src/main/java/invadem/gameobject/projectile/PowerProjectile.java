@@ -5,6 +5,10 @@ import invadem.Collidable;
 
 import processing.core.PImage;
 
+/**
+ * A more powerful version of the Projectile class
+ * This projectile is larger and will instantly destroy anything it hits
+ */
 public class PowerProjectile extends Projectile {
     
     // Static variables to store PowerProjectile resources

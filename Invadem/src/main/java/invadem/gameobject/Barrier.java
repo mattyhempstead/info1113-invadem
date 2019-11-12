@@ -63,6 +63,10 @@ public class Barrier extends Entity {
         return Barrier.barriers;
     } 
 
+    /**
+     * Attempts to collide all Barriers with a given projectile
+     * @param proj The projectile instance
+     */
     public static void checkProjectileCollision(Projectile proj) {
         for (Barrier barrier : Barrier.barriers) {
             if (Collidable.isColliding(proj, barrier)) {

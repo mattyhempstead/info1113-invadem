@@ -4,6 +4,9 @@ import invadem.App;
 
 import processing.core.PImage;
 
+/**
+ * A special type of invader which can take 3 hits before destruction
+ */
 public class ArmouredInvader extends Invader {
     // Static variables to store ArmouredInvader resources
     private static PImage[] imgArmouredInvader;

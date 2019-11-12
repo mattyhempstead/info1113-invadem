@@ -9,6 +9,9 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import java.util.ArrayList;
 
+/**
+ * A game state with clickable buttons to play either one or two player modes
+ */
 public class Menu extends GameState {
     private static PImage img1Player;
     private static PImage img2Player;
