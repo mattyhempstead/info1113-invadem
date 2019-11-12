@@ -8,6 +8,13 @@ import invadem.gameobject.projectile.Projectile;
 
 public class TankTest {
 
+    // Ensure tank instance can be correctly constructed
+    @Test
+    public void testTankConstruction() {
+        Tank tank = new Tank(0, 0);
+        assertNotNull(tank);
+    }
+
     // Ensure a single tank is correctly constructed when resetting for a one player game
     @Test
     public void testOnePlayerTankConstruction() {

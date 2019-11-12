@@ -17,7 +17,7 @@ public class Invader extends Entity {
     // Variables to keep track of when invader swarm should shoot
     private static final int shootCountdownTickLengthInitial = 60 * 5;
     private static int shootCountdownTickLength = shootCountdownTickLengthInitial;
-    private static int shootCountdown = 0;
+    private static int shootCountdown = shootCountdownTickLength;
  
     // Static variables to store Invader resources
     private static PImage[] imgInvader;
@@ -89,6 +89,13 @@ public class Invader extends Entity {
     }
 
     /**
+     * Returns the current tick cooldown between shooting
+     */
+    public static int getShootCooldownTickLength() {
+        return Invader.shootCountdownTickLength;
+    }
+
+    /**
      * Decreases the shootCountdownTickLength to a minimum of 60 ticks (1 second)
      */
     public static void decreaseShootCountdownTickLength() {
@@ -104,6 +111,14 @@ public class Invader extends Entity {
     public static void resetShootCountdownTickLength() {
         shootCountdown = 0;
         shootCountdownTickLength = shootCountdownTickLengthInitial;
+    }
+
+    /**
+     * Gets the current number of ticks until invader swarm shoots
+     * @return Integer number of ticks until shooting
+     */
+    public static int getShootCooldown() {
+        return Invader.shootCountdown;
     }
 
     /**
@@ -184,43 +199,35 @@ public class Invader extends Entity {
         
         // Move invader in a direction depending on its current state
         // States are cycled through on at an interval of 30 ticks horizontal and 8 ticks vertical
-        switch (this.stateNum) {
-            case 0:
-                // Move right for 30 ticks
-                this.posX++;
-                if (this.stateTick == 0) {
-                    this.stateNum = 1;
-                    this.stateTick = 8;
-                }
-                break;
-            case 1:
-                // Move down for 8 ticks
-                this.posY++;
-                if (this.stateTick == 0) {
-                    this.stateNum = 2;
-                    this.stateTick = 30;
-                }
-                break;
-            case 2:
-                // Move left for 30 ticks
-                this.posX--;
-                if (this.stateTick == 0) {
-                    this.stateNum = 3;
-                    this.stateTick = 8;
-                }
-                break;
-            case 3:
-                // Move down for 8 ticks
-                this.posY++;
-                if (this.stateTick == 0) {
-                    this.stateNum = 0;
-                    this.stateTick = 30;
-                }
-                break;
-            default:
-                break;
+        if (this.stateNum == 0) {
+            // Move right for 30 ticks
+            this.posX++;
+            if (this.stateTick == 0) {
+                this.stateNum = 1;
+                this.stateTick = 8;
+            }
+        } else if (this.stateNum == 1) {
+            // Move down for 8 ticks
+            this.posY++;
+            if (this.stateTick == 0) {
+                this.stateNum = 2;
+                this.stateTick = 30;
+            }
+        } else if (this.stateNum == 2) {
+            // Move left for 30 ticks
+            this.posX--;
+            if (this.stateTick == 0) {
+                this.stateNum = 3;
+                this.stateTick = 8;
+            }
+        } else {
+            // Move down for 8 ticks
+            this.posY++;
+            if (this.stateTick == 0) {
+                this.stateNum = 0;
+                this.stateTick = 30;
+            }
         }
-
     }
 
     public static void drawInvaders(App app) {
