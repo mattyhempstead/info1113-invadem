@@ -32,6 +32,7 @@ public class ProjectileTest {
     // Ensure new projectiles can be added
     @Test
     public void testProjectileAdd() {
+        Projectile.resetProjectiles();
         assertEquals(0, Projectile.getProjectiles().size());
         Projectile.addProjectile(new Projectile(0, 0, false));
         assertEquals(1, Projectile.getProjectiles().size());

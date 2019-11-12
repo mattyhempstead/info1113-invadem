@@ -61,7 +61,7 @@ public class TwoPlayer extends OnePlayer {
     }
 
     @Override
-    void handleTankMovement() {
+    public void handleTankMovement() {
         // Only allow movement if given tank is not destroyed
         if (!Tank.getTankA().isDestroyed()) {
             if (this.movingLeftA) Tank.getTankA().moveLeft();

@@ -53,7 +53,7 @@ public class OnePlayer extends GameState {
     /**
      * Moves tank based on key inputs
      */
-    void handleTankMovement() {
+    public void handleTankMovement() {
         // Avoiding else ifs allows keys to cancel out when pressed together
         if (this.movingLeft) Tank.getTankA().moveLeft();
         if (this.movingRight) Tank.getTankA().moveRight();
