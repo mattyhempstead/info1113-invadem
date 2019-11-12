@@ -1,10 +1,11 @@
 package invadem;
 
 import org.junit.Test;
-import org.junit.Before;
 import static org.junit.Assert.*;
 
 import invadem.App;
+import invadem.gameobject.Tank;
+import invadem.gameobject.invader.Invader;
 import processing.core.PApplet;
 
 public class AppTest {
@@ -16,52 +17,46 @@ public class AppTest {
         assertNotNull(app);
     }
 
-    // Ensure we can start One Player game and perform basic movement/shooting
+    // Ensure we can start and draw an Invadem instance through the various game states
     @Test
-    public void testAppDraw() {
+    public void testAppNextLevel() {
         boolean exceptionRaised = false;
         try {
             // Launch App
             App app = new App();
+            app.delay(1000);
             PApplet.runSketch(new String[] {""}, app);
-            app.delay(500);
+            app.delay(1000);
     
             // Start One Player mode
             app.mouseX = 80;
             app.mouseY = 210;
             app.mouseClicked();
-            app.delay(500);
-    
-            // Shoot barrier directly above Player
-            app.keyCode = 32;
-            app.keyReleased();
-            app.delay(500);
-            app.keyReleased();
-            app.delay(500);
-            app.keyReleased();
-            app.delay(500);
+            app.delay(1000);
 
-            // Shoot 3 projectiles at invaders
-            app.keyReleased();
-            app.delay(200);
-            app.keyReleased();
-            app.delay(200);
-            app.keyReleased();
+            // Shoot a single projectile
+            for (int i=0; i<3; i++) {
+                app.keyCode = 32;
+                app.keyReleased();
+                app.delay(500);
+            }
+            app.delay(3000);
+
+            // Remove all invaders to trigger next level transision
+            Invader.getInvaders().clear();
+            app.delay(5000);
+
+            // Destroy tank to trigger game over condition
+            Tank.getTankA().destroy();
+            app.delay(5000);
+
+            // Start Two Player mode
+            app.mouseX = 380;
+            app.mouseY = 210;
+            app.mouseClicked();
+
             app.delay(1000);
-    
-            // Move left for 1 seconds
-            app.keyCode = 37;
-            app.keyPressed();
-            app.delay(1000);
-            app.keyReleased();
-    
-            // Move right for 2 seconds
-            app.keyCode = 39;
-            app.keyPressed();
-            app.delay(2000);
-            app.keyReleased();
-    
-            app.delay(1000);
+
         } catch (Exception e) {
             exceptionRaised = true;
         }
