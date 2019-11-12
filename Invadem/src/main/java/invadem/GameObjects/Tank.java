@@ -63,7 +63,7 @@ public class Tank extends Entity {
     }
 
     public void moveRight() {
-        if (this.posX < 460) {
+        if (this.posX + this.width < 460) {
             this.posX += 1;
         }
     }
