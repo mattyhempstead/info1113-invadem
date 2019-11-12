@@ -6,7 +6,6 @@ import static org.junit.Assert.*;
 import invadem.App;
 import invadem.gameobject.Tank;
 import invadem.gameobject.projectile.Projectile;
-import invadem.gamestate.OnePlayer;
 import invadem.gamestate.TwoPlayer;
 
 public class TwoPlayerTest {

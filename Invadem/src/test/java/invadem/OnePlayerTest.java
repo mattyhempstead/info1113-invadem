@@ -88,4 +88,12 @@ public class OnePlayerTest {
         assertEquals(1, Projectile.getProjectiles().size());
     }
 
+    // @Test
+    // public void testOnePlayerDraw() {
+    //     App app = new App();
+    //     app.setup();
+    //     OnePlayer onePlayer = new OnePlayer(app);
+    //     onePlayer.draw(app);
+    // }
+
 }
