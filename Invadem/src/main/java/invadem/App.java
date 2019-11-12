@@ -21,13 +21,13 @@ public class App extends PApplet {
     public void setup() {
         frameRate(60);
 
-        this.gameState = new Menu();
+        this.gameState = new Menu();    // Game starts in the "Menu" state
         
         this.font = createFont("PressStart2P-Regular.ttf", 16);
         textFont(this.font);
 
         // Resources are loaded and stored in static variables in their respective classes
-        // This prevents the need to reload resources each time they are needed by a new object
+        // This prevents the need to reload resources each time they are needed by a new object instance
         Tank.loadResources(this);
         Invader.loadResources(this);
         ArmouredInvader.loadResources(this);
@@ -35,7 +35,6 @@ public class App extends PApplet {
         Projectile.loadResources(this);
         PowerProjectile.loadResources(this);
         Barrier.loadResources(this);
-
         Menu.loadResources(this);
         NextLevel.loadResources(this);
         GameOver.loadResources(this);
@@ -96,5 +95,4 @@ public class App extends PApplet {
     public static void main(String[] args) {
         PApplet.main("invadem.App");
     }
-
 }

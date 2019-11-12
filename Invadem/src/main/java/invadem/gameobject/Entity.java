@@ -12,6 +12,14 @@ public abstract class Entity extends GameObject implements Collidable {
     protected int health = 1;
 
     /**
+     * Gets the health of the Entity instance
+     * @return The current health
+     */
+    public int getHealth() {
+        return this.health;
+    }
+
+    /**
      * Remove one health, and destroy if entity reaches zero health
      */
     public void hit() {

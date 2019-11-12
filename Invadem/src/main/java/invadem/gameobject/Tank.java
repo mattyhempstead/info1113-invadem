@@ -48,14 +48,21 @@ public class Tank extends Entity {
         return Tank.tankB;
     }
 
+    /**
+     * Checks collision between a given projectile and both tanks
+     * @param proj
+     */
     public static void checkProjectileCollision(Projectile proj) {
+        // Tanks cannot collide with friendly projectiles
         if (proj.isFriendly()) return;
 
-        if (Collidable.isColliding(proj, Tank.tankA)) {
+        // Attempt to collide with TankA if it is not destroyed
+        if (!Tank.tankA.isDestroyed() && Collidable.isColliding(proj, Tank.tankA)) {
             proj.hit(Tank.tankA);
         }
 
-        if (Tank.tankB != null && Collidable.isColliding(proj, Tank.tankB)) {
+        // Attempt to collide with TankB if it exists and is not destroyed
+        if (Tank.tankB != null && !Tank.tankB.isDestroyed() && Collidable.isColliding(proj, Tank.tankB)) {
             proj.hit(Tank.tankB);
         }
     }

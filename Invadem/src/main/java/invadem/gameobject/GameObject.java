@@ -16,15 +16,31 @@ public abstract class GameObject implements Drawable {
         return this.posX;
     }
 
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
     public int getPosY() {
         return this.posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
     }
 
     public int getWidth() {
         return this.width;
     }
 
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
     public int getHeight() {
         return this.height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }
