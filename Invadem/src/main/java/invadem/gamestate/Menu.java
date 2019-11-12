@@ -1,5 +1,11 @@
-package invadem;
+package invadem.gamestate;
 
+import invadem.App;
+import invadem.gameobject.Button;
+import invadem.gamestate.OnePlayer;
+import invadem.gamestate.TwoPlayer;
+
+import processing.core.PApplet;
 import processing.core.PImage;
 import java.util.ArrayList;
 
@@ -49,7 +55,7 @@ public class Menu extends GameState {
     }
 
     public GameState draw(App app) {
-        app.textAlign(app.CENTER, app.TOP);
+        app.textAlign(PApplet.CENTER, PApplet.TOP);
         app.text("Invadem", 640/2, 100);
 
         for (Button button : this.buttons) {

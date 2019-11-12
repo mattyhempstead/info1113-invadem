@@ -1,4 +1,7 @@
-package invadem;
+package invadem.gamestate;
+
+import invadem.App;
+import invadem.gameobject.invader.Invader;
 
 import processing.core.PImage;
 

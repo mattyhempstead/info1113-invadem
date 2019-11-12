@@ -1,7 +1,12 @@
-package invadem;
+package invadem.gamestate;
 
-import invadem.GameOver;
-import invadem.NextLevel;
+import invadem.App;
+import invadem.gameobject.Tank;
+import invadem.gameobject.invader.Invader;
+import invadem.gameobject.Barrier;
+import invadem.gameobject.projectile.Projectile;
+
+import processing.core.PApplet;
 
 public class OnePlayer extends GameState {    
     int tickCount; // The amount of ticks user has been in the current game state
@@ -97,11 +102,11 @@ public class OnePlayer extends GameState {
         }
 
         // Draw current score in top left
-        app.textAlign(app.LEFT, app.TOP);
+        app.textAlign(PApplet.LEFT, PApplet.TOP);
         app.text(app.getCurrScore(), 10, 10);
 
         // Draw high score in top right
-        app.textAlign(app.RIGHT, app.TOP);
+        app.textAlign(PApplet.RIGHT, PApplet.TOP);
         app.text(app.getHighScore(), 640 - 10, 10);
 
         return this;

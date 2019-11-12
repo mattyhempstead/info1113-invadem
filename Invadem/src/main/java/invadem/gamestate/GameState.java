@@ -1,4 +1,6 @@
-package invadem;
+package invadem.gamestate;
+
+import invadem.App;
 
 public abstract class GameState {
     public abstract GameState draw(App app);

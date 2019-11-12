@@ -1,4 +1,11 @@
-package invadem;
+package invadem.gameobject.projectile;
+
+import invadem.App;
+import invadem.Collidable;
+import invadem.gameobject.Barrier;
+import invadem.gameobject.Tank;
+import invadem.gameobject.invader.Invader;
+import invadem.gameobject.Entity;
 
 import java.util.ArrayList;
 import processing.core.PImage;

@@ -1,4 +1,8 @@
-package invadem;
+package invadem.gameobject;
+
+import invadem.App;
+import invadem.Collidable;
+import invadem.gameobject.projectile.Projectile;
 
 import java.util.ArrayList;
 import processing.core.PImage;

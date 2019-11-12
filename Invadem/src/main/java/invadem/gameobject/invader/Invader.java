@@ -1,4 +1,9 @@
-package invadem;
+package invadem.gameobject.invader;
+
+import invadem.App;
+import invadem.Collidable;
+import invadem.gameobject.Entity;
+import invadem.gameobject.projectile.Projectile;
 
 import java.util.ArrayList;
 import java.lang.Math;

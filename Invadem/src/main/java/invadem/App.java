@@ -1,5 +1,10 @@
 package invadem;
 
+import invadem.gameobject.*;
+import invadem.gameobject.invader.*;
+import invadem.gameobject.projectile.*;
+import invadem.gamestate.*;
+
 import processing.core.PApplet;
 import processing.core.PFont;
 

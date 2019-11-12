@@ -1,4 +1,8 @@
-package invadem;
+package invadem.gameobject.invader;
+
+import invadem.App;
+import invadem.gameobject.projectile.Projectile;
+import invadem.gameobject.projectile.PowerProjectile;
 
 import processing.core.PImage;
 

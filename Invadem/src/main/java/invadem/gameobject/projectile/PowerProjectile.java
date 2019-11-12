@@ -1,4 +1,7 @@
-package invadem;
+package invadem.gameobject.projectile;
+
+import invadem.App;
+import invadem.Collidable;
 
 import processing.core.PImage;
 

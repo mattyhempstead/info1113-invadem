@@ -1,5 +1,8 @@
-package invadem;
+package invadem.gameobject;
 
+import invadem.App;
+
+import processing.core.PApplet;
 import java.lang.Runnable;
 
 public class Button extends GameObject {
@@ -28,7 +31,7 @@ public class Button extends GameObject {
         app.rect(this.posX, this.posY, this.width, this.height);
         app.fill(255);
 
-        app.textAlign(app.CENTER, app.CENTER);
+        app.textAlign(PApplet.CENTER, PApplet.CENTER);
         app.text(
             this.text,
             this.posX + this.width/2, 

@@ -1,14 +1,16 @@
-package invadem;
+package invadem.gameobject;
+
+import invadem.Drawable;
 
 /**
  * GameObjects are any drawable objects within Invadem that
  * have a particular size and location on the screen.
  */
 public abstract class GameObject implements Drawable {
-    int posX;
-    int posY;
-    int width;
-    int height;
+    protected int posX;
+    protected int posY;
+    protected int width;
+    protected int height;
 
     public int getPosX() {
         return this.posX;

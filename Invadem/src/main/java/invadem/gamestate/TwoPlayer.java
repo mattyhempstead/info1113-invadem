@@ -1,4 +1,8 @@
-package invadem;
+package invadem.gamestate;
+
+import invadem.App;
+import invadem.gameobject.Tank;
+import invadem.gameobject.projectile.Projectile;
 
 public class TwoPlayer extends OnePlayer {
     private boolean movingLeftA;
