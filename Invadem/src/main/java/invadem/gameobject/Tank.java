@@ -57,11 +57,11 @@ public class Tank extends Entity {
         if (proj.isFriendly()) return;
 
         // Attempt to collide with TankA if it is not destroyed
-        if (!Tank.tankA.isDestroyed() && Collidable.isColliding(proj, Tank.tankA)) {
+        if (Tank.tankA != null && !Tank.tankA.isDestroyed() && Collidable.isColliding(proj, Tank.tankA)) {
             proj.hit(Tank.tankA);
         }
 
-        // Attempt to collide with TankB if it exists and is not destroyed
+        // Attempt to collide with TankB if it is not destroyed
         if (Tank.tankB != null && !Tank.tankB.isDestroyed() && Collidable.isColliding(proj, Tank.tankB)) {
             proj.hit(Tank.tankB);
         }

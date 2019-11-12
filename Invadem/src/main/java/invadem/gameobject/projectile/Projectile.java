@@ -68,7 +68,7 @@ public class Projectile extends Entity {
         collided.hit();
     }
 
-    private void tick(App app) {
+    public void tick(App app) {
         this.posY += this.friendly ? -1 : 1;
 
         // Destroy if projectile leaves map
