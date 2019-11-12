@@ -150,7 +150,8 @@ public class Invader extends Entity {
      */
     public static boolean hasReachedBarriers() {
         for (Invader invader : Invader.invaders) {
-            if (invader.getPosY() + invader.getHeight() >= 400 - 12) {
+            // If bottom of invader reaches 10px above top of barriers
+            if (invader.getPosY() + invader.getHeight() >= 400 - 12 - 10) {
                 return true;
             }
         }
