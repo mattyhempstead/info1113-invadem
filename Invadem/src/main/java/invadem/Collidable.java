@@ -11,6 +11,13 @@ public interface Collidable {
     public void hit();
     public void destroy();
     public boolean isDestroyed();
+
+    /**
+     * Calculates whether a given object implementing Collidable is colliding with another
+     * @param a The first Collidable object
+     * @param b The second Collidable object
+     * @return Whether or not the two objects are colliding
+     */
     public static boolean isColliding(Collidable a, Collidable b) {
         // Don't allow objects which are destroyed to collide with others
         if (a.isDestroyed() || b.isDestroyed()) return false;

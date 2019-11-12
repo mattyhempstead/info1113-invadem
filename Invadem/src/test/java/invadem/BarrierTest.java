@@ -37,11 +37,20 @@ public class BarrierTest {
         assertFalse(barrier.isDestroyed());
     }
 
-    // Ensure Barrier loses one health when hit by a projectile
+    // Ensure Barrier loses one health when hit by a friendly projectile
     @Test
-    public void testBarrierCollision() {
+    public void testBarrierCollisionFriendly() {
         Barrier barrier = new Barrier(null, 0, 0);
         Projectile proj = new Projectile(0, 0, true);
+        proj.hit(barrier);
+        assertEquals(barrier.getHealth(), 2);
+    }
+
+    // Ensure Barrier loses one health when hit by an enemy projectile
+    @Test
+    public void testBarrierCollisionEnemy() {
+        Barrier barrier = new Barrier(null, 0, 0);
+        Projectile proj = new Projectile(0, 0, false);
         proj.hit(barrier);
         assertEquals(barrier.getHealth(), 2);
     }

@@ -4,7 +4,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import invadem.App;
+import invadem.gameobject.Entity;
 import invadem.gameobject.projectile.Projectile;
+import invadem.gameobject.projectile.PowerProjectile;
 
 public class ProjectileTest {
 
@@ -15,7 +17,7 @@ public class ProjectileTest {
         assertNotNull(proj);
     }
 
-    // Ensure friendly projectile instance can be constructed
+    // Ensure friendly projectile instance can be constructed`
     @Test
     public void testProjectileIsFriendly() {
         Projectile proj = new Projectile(0, 0, true);
@@ -104,5 +106,33 @@ public class ProjectileTest {
         assertFalse(proj.isDestroyed());
         proj.tick(new App());
         assertTrue(proj.isDestroyed());
+    }
+
+    // Ensure projectiles are destroyed and remove one health from entities upon collision
+    @Test
+    public void testProjectileHit() {
+        Projectile proj = new Projectile(0, 0, false);
+        Entity entity = new Entity() {
+            {this.health = 3;}
+            public void draw(App app) {};
+        };
+        proj.hit(entity);
+
+        assertTrue(proj.isDestroyed());
+        assertEquals(2, entity.getHealth());
+    }
+
+    // Ensure power projectiles are destroyed and destroy entities upon collision
+    @Test
+    public void testPowerProjectileHit() {
+        Projectile proj = new PowerProjectile(0, 0, false);
+        Entity entity = new Entity() {
+            {this.health = 3;}
+            public void draw(App app) {};
+        };
+        proj.hit(entity);
+
+        assertTrue(proj.isDestroyed());
+        assertTrue(entity.isDestroyed());
     }
 }

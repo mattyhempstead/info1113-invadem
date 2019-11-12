@@ -34,8 +34,8 @@ public class AppTest {
             app.mouseClicked();
             app.delay(1000);
 
-            // Shoot a single projectile
-            for (int i=0; i<3; i++) {
+            // Shoot a series of projectiles
+            for (int i=0; i<10; i++) {
                 app.keyCode = 32;
                 app.keyReleased();
                 app.delay(500);
