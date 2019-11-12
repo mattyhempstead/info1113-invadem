@@ -49,6 +49,14 @@ public class Menu extends GameState {
         }
     }
 
+    public boolean getHasSelectedMode() {
+        return this.hasSelectedMode;
+    }
+
+    public boolean getMode() {
+        return this.mode;
+    }
+
     public void selectMode(boolean mode) {
         this.mode = mode;
         this.hasSelectedMode = true;
